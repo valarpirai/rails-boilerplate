@@ -1,5 +1,8 @@
 # README
 
+## Reference
+https://www.freecodecamp.org/news/have-an-idea-want-to-build-a-product-from-scratch-heres-a-checklist-of-things-you-should-go-through-in-your-backend-software-architecture/
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
