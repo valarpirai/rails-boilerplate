@@ -7,6 +7,8 @@ Things you may want to cover:
 
 * Ruby version
 
+rvm --create --ruby-version ruby-2.6.3@boilerplate
+
 * System dependencies
 
 * Configuration

@@ -1,0 +1,15 @@
+app_name: Boilerplate
+latest_shard: shard_1
+
+# Used in account creation 
+base_domain:
+    development: myapp-dev.com
+    production: myapp.com
+    staging: myapp-stg.com
+    test: myapp-test.com
+
+# Used for accessing the site admin controllers, to manage plans,
+# discounts, etc.  This is prepended to base_domain, so 'admin'
+# here will allow admin.example.com to serve the admin interface.
+admin_subdomain: admin
+
