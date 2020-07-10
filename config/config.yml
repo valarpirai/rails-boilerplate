@@ -13,3 +13,5 @@ base_domain:
 # here will allow admin.example.com to serve the admin interface.
 admin_subdomain: admin
 
+signup_subdomain: signup
+

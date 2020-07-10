@@ -1,0 +1,5 @@
+Model Relationships at schema level
+Seed data
+Rake tasks
+Mandatory Gems selection
+
