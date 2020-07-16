@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
     layout :choose_layout
 
-    include Concerns::ApplicationLayoutConcern
+     include Concerns::ApplicationLayoutConcern
 
     def current_user
         nil
