@@ -3,3 +3,6 @@ Seed data
 Rake tasks
 Mandatory Gems selection
 https://coderthemes.com/hyper/saas/dashboard-projects.html
+
+recaptcha
+Announcements - Banner
