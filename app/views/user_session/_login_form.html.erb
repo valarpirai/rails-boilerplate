@@ -1,0 +1,41 @@
+<% @user_session ||= User.new %>
+<%= form_for @user_session, :url => user_session_path do |f| %>
+  	
+	<fieldset>
+	  	<div class="control-group">
+	  		<div class="controls">
+	  			<input class="required special" id="user_session_email" name="user_session[email]" 
+	  				placeholder="<%= t('your_email_address') %>" aria-label="<%= t('your_email_address') %>" size="30" type="email" value="<%= @user_session.email %>" />
+	  		</div>
+		</div>
+		<div class="control-group">
+	  		<div class="controls">
+	  			<input class="special" id="user_session_password" name="user_session[password]" 
+	  				placeholder="<%= t('support.login.form.password') %>" aria-label="<%= t('support.login.form.password') %>" size="30" type="password" autocomplete="off">
+	  		</div>
+	  		<% if @show_recaptcha %>
+          		<div class="controls recaptcha-control">
+            	<%= recaptcha_tags :display => { :theme => "white" } %>
+          		</div>
+       		<% end %>
+	  	</div>
+		<div class="control-group forgot-pass-container">			
+	  		<div class="controls clearfix">
+	  			<label class="checkbox pull-left">
+	  				<%= f.check_box :remember_me %>
+					<%= t('support.login.form.remember') %>
+				</label>
+				<div class="pull-right">
+					<%= link_to(t('support.login.form.forgot'), "", 
+						:id => "forgot_password",
+						"data-toggle-dom" => "#forgot-form, #login-form" ) %>
+				</div>
+			</div>
+	  	</div>
+	  	<div class="control-group login-form-submit">			
+	  		<div class="controls">
+	  			<button type="submit" class="btn btn-primary btn-login"> <%= t('support.login.form.login') %> </button>
+	  		</div>
+	  	</div>
+	</fieldset>
+<% end %>

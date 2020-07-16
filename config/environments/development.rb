@@ -7,7 +7,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -61,7 +61,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.sentry = true
@@ -78,4 +77,9 @@ Rails.application.configure do
     Bullet.skip_html_injection = false
     Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
   end
+
+  # Middlewares
+  require "#{Rails.root}/lib/middleware/disable_assets_logger"
+  config.middleware.insert_before Rails::Rack::Logger, Middleware::DisableAssetsLogger
+
 end

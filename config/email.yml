@@ -1,0 +1,19 @@
+# Email settings for sending mail
+outgoing: 
+    defaults: &defaults
+      address: smtpout.example.com
+      port: 587
+      domain: example.com
+      authentication: :plain
+      user_name: sample
+      password: a309fmdKld#d
+      open_timeout: 10
+      read_timeout: 30
+    development:
+      <<: *defaults
+    test:
+      <<: *defaults
+    staging:
+      <<: *defaults
+
+product_name: "BoilerPlate"
