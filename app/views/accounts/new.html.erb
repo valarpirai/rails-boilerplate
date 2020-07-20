@@ -5,27 +5,28 @@
 
     <h2>Account Signup</h2>
 
-    <%= form_with url: accounts_signup_path, method: 'post' do |f| %>
+    <%= form_with url: accounts_signup_path, method: 'post', html: { :onsubmit => "set_hidden_value(this);" } do |f| %>
 
         <div class="form-group">
             <div class="form-row">
                 <div class="col-md-6">
-                    <%= f.text_field 'signup[first_name]', autofocus: true, class: "form-control", placeholder: "First Name", required: "true" %>
+                    <%= f.text_field 'user[first_name]', autofocus: true, class: "form-control", placeholder: "First Name", required: "true" %>
                 </div>
                 <div class="col-md-6">
-                    <%= f.text_field 'signup[last_name]', autofocus: true, class: "form-control", placeholder: "Last Name", required: "true" %>
+                    <%= f.text_field 'user[last_name]', autofocus: true, class: "form-control", placeholder: "Last Name", required: "true" %>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <%= f.email_field 'signup[email]', autocomplete: "email", class: "form-control", placeholder: "Business Email", required: "true" %>
+            <%= f.email_field 'user[email]', autocomplete: "email", class: "form-control", placeholder: "Business Email", required: "true" %>
         </div>
 
         <div class="form-group">
-            <%= f.text_field 'signup[company]', autocomplete: "company", class: "form-control", placeholder: "Company", required: "true" %>
+            <%= f.text_field 'account[name]', autocomplete: "company", class: "form-control", placeholder: "Company", required: "true" %>
         </div>
         
+        <%= f.hidden_field 'account[domain]', class: "form-control", required: "true" %>
 
         <div class="form-group">
             <%= f.submit "Signup", class: "btn btn-primary" %>
@@ -33,4 +34,11 @@
 
     <% end %>
     </div>
+    <script>
+    function set_hidden_value(form) {
+        form = jQuery(form);
+        account_name = jQuery('#account_name', form).val();
+        jQuery('#account_domain', form).val(account_name);
+    }
+    </script>
 </div>
