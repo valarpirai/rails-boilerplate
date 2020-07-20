@@ -15,5 +15,6 @@ module LoadAppInitializer
     end
   end
   
+  puts 'Loading App Initializers...'
   LoadAppInitializer.load_files("#{Rails.root}/lib", YAML.load_file(File.join(Rails.root, 'config', 'app_initializers.yml')))
   

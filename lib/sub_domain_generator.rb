@@ -22,6 +22,12 @@ class SubDomainGenerator
       end
   end
 
+  def domain
+    @domain ||= generate_application_url
+    @domain = generate_application_url random_digits if @domain.blank?
+    @domain
+  end
+
   def subdomain
     @subdomain ||= domain.gsub(".#{APP_BASE_DOMAIN}", '')
   end
@@ -51,12 +57,6 @@ class SubDomainGenerator
     valid = (DomainMapping.new(domain: full_domain, account: sample_account).valid? &&
     run_domain_validations(sample_account))
     valid
-  end
-
-  def domain
-    @domain ||= generate_application_url
-    @domain = generate_application_url random_digits if @domain.blank?
-    @domain
   end
 
   def generate_application_url(random = '')
