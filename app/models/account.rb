@@ -6,7 +6,7 @@ class Account < ApplicationRecord
   concerned_with :callbacks
 
   has_many :users, lambda {
-    where(['deleted = false']).order(first_name: :asc, last_name: :asc)
+    where(['deleted = false']).order(first_name: :asc, last_name: :asc) 
   }, class_name: 'User'
 
   def domain
@@ -20,6 +20,10 @@ class Account < ApplicationRecord
   class << self
     def current
       Thread.current[:account]
+    end
+
+    def reset_current
+      Thread.current[:account] = nil
     end
   end
 end

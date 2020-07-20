@@ -9,8 +9,4 @@ class ApplicationController < ActionController::Base
   # rescue_from(ActionController::UnpermittedParameters) do |pme|
   #   render json: { error: { unknown_parameters: pme.params } }, status: :bad_request
   # end
-
-  def current_user
-    nil
-  end
 end

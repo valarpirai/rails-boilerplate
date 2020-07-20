@@ -6,4 +6,9 @@ class User < ApplicationRecord
   belongs_to_account
 
   concerned_with :validations, :callbacks
+
+  def self.unscoped
+    return super.where(account_id: Account.current.id) if Account.current
+    super
+  end
 end

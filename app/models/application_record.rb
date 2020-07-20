@@ -4,15 +4,15 @@ class ApplicationRecord < ActiveRecord::Base
   self.primary_key = :id
 
   def account
-    ::Account.current || super
+    Account.current || super
   end
 
   class << self
     # Tenent configurations
     def belongs_to_account
-      belongs_to :account, class_name: '::Account'
+      belongs_to :account, class_name: 'Account'
       default_scope do
-        where(account_id: ::Account.current.id) unless ::Account.current.blank?
+        Account.current ? where(account_id: Account.current&.id) : where('1=1')
       end
     end
 
