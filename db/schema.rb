@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_013054) do
+ActiveRecord::Schema.define(version: 2020_07_10_012822) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "uuid"
-    t.string "name"
-    t.string "full_domain"
-    t.string "time_zone"
+    t.string "uuid", limit: 36, null: false
+    t.string "name", null: false
+    t.string "full_domain", null: false
+    t.string "time_zone", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 2020_07_10_013054) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_domain_mappings_on_account_id"
-    t.index ["domain"], name: "index_domain_mappings_on_domain", unique: true
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
