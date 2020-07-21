@@ -13,12 +13,13 @@ class AccountsController < ApplicationController
       respond_to do |format|
         format.html do
           render json: { success: true,
-                         url: signup_complete_url(token: @signup.account.users.first.perishable_token, host: @signup.account.full_domain),
+                         url: edit_user_password_url(reset_password_token: @signup.account.users.first.generate_reset_password_token,
+                          host: @signup.account.full_domain),
                          account_id: @signup.account.id  }
         end
         format.json do
           render json: { success: true, host: @signup.account.full_domain,
-                         t: @signup.account.first.user.single_access_token}
+                         t: @signup.account.first.user.generate_reset_password_token}
         end
       end
     else

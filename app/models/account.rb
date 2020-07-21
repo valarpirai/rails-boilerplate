@@ -25,5 +25,10 @@ class Account < ApplicationRecord
     def reset_current
       Thread.current[:account] = nil
     end
+
+    def fetch_by_full_domain(full_domain)
+      return if full_domain.blank?
+      find_by(full_domain: full_domain)
+    end
   end
 end

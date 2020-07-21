@@ -13,9 +13,9 @@ class Signup
   end
 
   def save
-    raise 'account invalid' unless account.valid?
+    # raise 'account invalid' unless account.valid?
     account.save!
-    raise 'user invalid' unless user.valid?
+    # raise 'user invalid' unless user.valid?
     user.save!
   rescue Exception => e
     @errors << e
