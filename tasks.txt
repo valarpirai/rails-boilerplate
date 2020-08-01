@@ -1,8 +1,21 @@
 Model Relationships at schema level
 Seed data
+
 Rake tasks
 Mandatory Gems selection
 https://coderthemes.com/hyper/saas/dashboard-projects.html
+https://www.freecodecamp.org/news/have-an-idea-want-to-build-a-product-from-scratch-heres-a-checklist-of-things-you-should-go-through-in-your-backend-software-architecture/
 
 recaptcha
 Announcements - Banner
+Sidekiq Worker
+Mailer
+Rate limiting
+Roles and Permissions
+
+Sharding at table level
+
+Controller param Validation
+Rest Client
+Wrappers for Gems
+

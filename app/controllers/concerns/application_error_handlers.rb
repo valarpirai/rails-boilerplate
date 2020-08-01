@@ -2,14 +2,15 @@ module Concerns::ApplicationErrorHandlers
   extend ActiveSupport::Concern
 
   included do
-    rescue_from ActionController::RoutingError, with: :record_not_found
-    
+    rescue_from ::ActionController::RoutingError, with: :record_not_found
+    # rescue_from StandardError, with: :record_not_found
+    rescue_from ::ActiveRecord::RecordNotFound, with: :record_not_found
   end
 
   private
 
   def render_404
-    render file: "#{Rails.root}/404", formats: [:html], status: :not_found, layout: false
+    render file: "#{Rails.root}/public/404", formats: [:html], status: :not_found, layout: false
   end
 
   JSON_404 = {errors: {error: "Record Not Found"}}.to_json
@@ -23,12 +24,6 @@ module Concerns::ApplicationErrorHandlers
         end
       }
       format.json do
-        render json: JSON_404, status: :not_found
-      end
-      format.nmobile do
-        render json: JSON_404, status: :not_found
-      end
-      format.widget do
         render json: JSON_404, status: :not_found
       end
     end

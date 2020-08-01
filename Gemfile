@@ -46,6 +46,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'ruby_xid'
 
+gem 'seed-fu', '~> 2.3'
+
 gem 'bootstrap', '~> 4.5.0'
 gem 'jquery-rails'
 

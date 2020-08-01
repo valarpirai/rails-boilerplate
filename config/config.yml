@@ -15,3 +15,8 @@ admin_subdomain: admin
 
 signup_subdomain: signup
 
+app_website: localhost.myapp-dev.com
+
+EMAILS:
+    admin_email: admin@myapp.com
+

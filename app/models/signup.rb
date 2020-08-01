@@ -5,10 +5,11 @@ class Signup
 
   def initialize(params)
     @errors = []
+    set_full_domain(params[:account])
     self.account = Account.new(params[:account])
     account.make_current
     self.user = User.new(params[:user])
-    user.password = SecureRandom.hex(10)
+    user.password = SecureRandom.hex(10) if user.password.nil?
     user.account = account
   end
 
@@ -27,6 +28,13 @@ class Signup
     return account.errors.app_json unless account.errors.messages.blank?
     return user.errors.app_json unless user.errors.messages.blank?
     @errors
+  end
+
+  private
+
+  def set_full_domain(account)
+    account[:full_domain] = "#{account[:domain]}.#{SubDomainGenerator::APP_BASE_DOMAIN}" unless account[:full_domain]
+    account.delete(:domain)
   end
 
   def clean_up

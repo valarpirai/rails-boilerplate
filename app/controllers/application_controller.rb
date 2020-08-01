@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   include Concerns::ApplicationConcern
   include Concerns::ApplicationErrorHandlers
 
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
   before_action :set_current_account
 
   # Throw exception
