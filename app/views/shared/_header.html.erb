@@ -230,6 +230,9 @@
                 </a>
 
                 <!-- item-->
+                <%= link_to("Logout", destroy_user_session_path, action: :post,  method: :delete,
+						id: "forgot_password",
+						html: { class: 'dropdown-item notify-item' }) %>
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <i class="mdi mdi-logout mr-1"></i>
                     <span>Logout</span>
