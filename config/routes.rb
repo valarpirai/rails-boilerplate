@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
 
-  get '/accounts/new' => 'accounts#new'
+  get '/accounts/signup' => 'accounts#new'
   post '/accounts/signup' => 'accounts#signup'
 
   devise_for :users

@@ -5,7 +5,7 @@
 
     <h2>Account Signup</h2>
 
-    <%= form_with url: accounts_signup_path, method: 'post', html: { :onsubmit => "set_hidden_value(this);" } do |f| %>
+    <%= form_with url: accounts_signup_path, method: 'post' do |f| %>
 
         <div class="form-group">
             <div class="form-row">
@@ -34,11 +34,4 @@
 
     <% end %>
     </div>
-    <script>
-    function set_hidden_value(form) {
-        form = jQuery(form);
-        account_name = jQuery('#account_name', form).val();
-        jQuery('#account_domain', form).val(account_name);
-    }
-    </script>
 </div>

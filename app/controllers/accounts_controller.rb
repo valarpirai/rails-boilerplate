@@ -12,10 +12,8 @@ class AccountsController < ApplicationController
     if @signup.save
       respond_to do |format|
         format.html do
-          render json: { success: true,
-                         url: edit_user_password_url(reset_password_token: @signup.account.users.first.generate_reset_password_token,
-                          host: @signup.account.full_domain),
-                         account_id: @signup.account.id  }
+          redirect_to edit_user_password_url(reset_password_token: @signup.account.users.first.generate_reset_password_token,
+            host: @signup.account.full_domain)
         end
         format.json do
           render json: { success: true, host: @signup.account.full_domain,
@@ -43,8 +41,7 @@ class AccountsController < ApplicationController
 
     params[:signup][:locale] = 'en'
     params[:signup][:time_zone] = params[:utc_offset]
-    puts params.inspect
-   end
+  end
 
   def signup_params
     params.permit(user: %i[first_name last_name email], account: %i[name full_domain])

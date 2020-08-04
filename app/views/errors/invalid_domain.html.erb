@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>There is no application here!</title>
+    <style type="text/css">
+			body {
+  color: #333;
+  font: 16px "Roboto", Helvetica Neue, Arial, Helvetica, sans-serif;
+  background-color: transparent;
+  background: #efefef;
+  min-width: 90%;
+  -webkit-font-smoothing: antialiased;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 2em;
+}
+
+a {
+  color: #336699;
+}
+
+a:hover {
+  color: #264c73;
+}
+
+.wrapper {
+  *zoom: 1;
+  width: 90%;
+  padding-left: 10px;
+  padding-left: 0.625rem;
+  padding-right: 10px;
+  padding-right: 0.625rem;
+  margin-left: auto;
+  margin-right: auto;
+  *zoom: 1;
+  overflow: visible;
+  position: relative;
+  text-align: left;
+}general/_clearfix.scss */
+.wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}general/_clearfix.scss */
+.wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.no-application {
+  width: 500px;
+  margin: auto;
+  text-align: center;
+}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="container">
+			<div class="wrapper">
+				<div class="wrapper-shadow">
+					<div class="no-application">
+						<h2> We couldn't find <span id="domainname"></span></h2>
+						<p>Maybe this is still available!  </p> 
+						<p> You can claim it.. <%= link_to "Signup","http://#{AppConfig[:app_website]}/accounts/signup" %></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%= javascript_tag do %>
+			document.getElementById("domainname").innerHTML = (document.domain);
+		<% end %>
+	</body>
+</html>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
-  validates_uniqueness_of :full_domain, :uuid
+  validates_uniqueness_of :full_domain
 
   concerned_with :callbacks
 
