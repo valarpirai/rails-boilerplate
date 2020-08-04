@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2020_07_10_012822) do
     t.string "time_zone", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["full_domain"], name: "index_accounts_on_full_domain", unique: true
+    t.index ["uuid"], name: "index_accounts_on_uuid", unique: true
   end
 
   create_table "domain_mappings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -27,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_012822) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_domain_mappings_on_account_id"
+    t.index ["domain"], name: "index_domain_mappings_on_domain", unique: true
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
