@@ -1,12 +1,10 @@
 <div id="sticky_head">
     <nav class="page-tabs action-bar">
       <div class="nav-link" id="page-tabs">
-              <a class="" href="/">
-                  Home 
-              </a>
-              <a class="" href="/accounts/signup">
-                  Account Signup
-              </a>
+            <%= link_to 'Home', root_path %>
+            <%= link_to 'Account Signup', accounts_signup_path %>
+            <%= link_to "Login", user_session_path %>
+            <%= link_to "Signup", new_user_registration_path %>
       </div>
       </div>
     </nav>
