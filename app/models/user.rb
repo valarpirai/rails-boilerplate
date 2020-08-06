@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :trackable, :lockable,
+         :recoverable, :rememberable, :validatable, :confirmable, :omniauthable
   belongs_to_account
 
   concerned_with :validations, :callbacks
@@ -20,5 +20,9 @@ class User < ApplicationRecord
     self.reset_password_token = hashed
     save!
     @token
+  end
+
+  def after_database_authentication
+    
   end
 end

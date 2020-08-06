@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+ # frozen_string_literal: true
 
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
@@ -7,13 +7,14 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 
-gem 'mysql2', '~> 0.5.3'
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootstrap', '~> 4.5.0'
 
 gem 'devise'
 gem 'freemail', '~> 0.4.0', require: false
+gem 'mysql2', '~> 0.5.3'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
@@ -41,15 +42,13 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'jquery-rails'
+
+gem 'omniauth'
 
 gem 'ruby_xid'
 
 gem 'seed-fu', '~> 2.3'
-
-gem 'bootstrap', '~> 4.5.0'
-gem 'jquery-rails'
 
 # gem 'active_presenter', git: 'https://github.com/jorgevaldivia/active_presenter'
 
