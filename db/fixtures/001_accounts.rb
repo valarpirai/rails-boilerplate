@@ -7,7 +7,8 @@ unless Account.current
         last_name: 'User',
         password: 'test1234',
         password_confirmation: 'test1234',
-        email: AppConfig['EMAILS']['admin_email']
+        email: AppConfig['EMAILS']['admin_email'],
+        confirmed_at: Time.now
       }
     )
     signup.save
