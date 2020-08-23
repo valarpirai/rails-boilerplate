@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/accounts/signup' => 'accounts#new'
   post '/accounts/signup' => 'accounts#signup'
 
+  # To Override - configure other modules
   devise_for :users, controllers: {
     sessions: 'users/sessions', registrations: 'users/registrations'
   }

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::UnlocksController < Devise::UnlocksController
+  include Concerns::ApplicationConcern
   # GET /resource/unlock/new
   # def new
   #   super
