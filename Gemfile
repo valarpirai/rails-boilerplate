@@ -10,9 +10,14 @@ gem 'rails', '~> 5.2.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+# UI Libarary
 gem 'bootstrap', '~> 4.5.0'
 
+# User Authentication
 gem 'devise'
+
+# database of free and disposable email domains.
 gem 'freemail', '~> 0.4.0', require: false
 gem 'mysql2', '~> 0.5.3'
 
@@ -46,8 +51,13 @@ gem 'jquery-rails'
 
 gem 'omniauth'
 
+# Rack middleware for blocking & throttling abusive requests
+gem 'rack-attack'
+
+# Unique ID
 gem 'ruby_xid'
 
+# Load fixtures in DB
 gem 'seed-fu', '~> 2.3'
 
 # gem 'active_presenter', git: 'https://github.com/jorgevaldivia/active_presenter'

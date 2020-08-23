@@ -134,6 +134,8 @@ GEM
     public_suffix (4.0.5)
     puma (3.12.6)
     rack (2.2.3)
+    rack-attack (6.3.1)
+      rack (>= 1.0, < 3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.4.3)
@@ -250,6 +252,7 @@ DEPENDENCIES
   mysql2 (~> 0.5.3)
   omniauth
   puma (~> 3.11)
+  rack-attack
   rails (~> 5.2.3)
   ruby_xid
   sass-rails (~> 5.0)
