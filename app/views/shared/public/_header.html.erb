@@ -9,3 +9,8 @@
       </div>
     </nav>
 </div>
+
+<% if flash[:notice] %>
+  <%# <div id="notice" class="notice"><%= flash[:notice] %></div> %>
+  <% flash.discard %>
+<% end %>

@@ -4,10 +4,11 @@ Rails.application.routes.draw do
   get '/accounts/signup' => 'accounts#new'
   post '/accounts/signup' => 'accounts#signup'
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions', registrations: 'users/registrations'
+  }
 
-  get '/login' => 'user_session#new', as: :login
-  get '/login/normal' => 'user_session#new', as: :login_normal, constraints: lambda {|req| req.format == :html }
+  get '/login/normal' => 'users/sessions#new', as: :login_normal, constraints: lambda {|req| req.format == :html }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -35,9 +35,9 @@ environment ENV.fetch('RAILS_ENV') { 'development' }
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
-workers 1
+# workers 1
 
-preload_app!
+# preload_app!
 
 on_worker_boot do
   puts 'PUMA Worker started...'

@@ -1,10 +1,14 @@
 module Concerns::ApplicationConcern
   extend ActiveSupport::Concern
 
+  included do
+    before_action :set_current_account
+  end
+
   def set_current_account
     # begin
-      current_account
-      # User.current = current_user
+    current_account.make_current
+    current_user.make_current if user_signed_in?
     # rescue ActiveRecord::RecordNotFound
     # end
   end
@@ -18,7 +22,7 @@ module Concerns::ApplicationConcern
     raise ActiveRecord::RecordNotFound unless account
     account
   end
-  
+
   def request_host
     @request_host ||= request.host
   end

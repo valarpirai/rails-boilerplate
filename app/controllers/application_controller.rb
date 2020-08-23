@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   include Concerns::ApplicationConcern
   include Concerns::ApplicationErrorHandlers
 
-  before_action :set_current_account
-
   # Throw exception
   # ActionController::Parameters.action_on_unpermitted_parameters = :raise
   # rescue_from(ActionController::UnpermittedParameters) do |pme|
