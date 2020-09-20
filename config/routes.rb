@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   # To Override - configure other modules
   devise_for :users, controllers: {
-    sessions: 'users/sessions', registrations: 'users/registrations'
+    sessions: 'users/sessions', registrations: 'users/registrations', confirmations: 'users/confirmations', passwords: 'users/passwords', unlocks: 'users/unlocks'
   }
 
   get '/login/normal' => 'users/sessions#new', as: :login_normal, constraints: lambda {|req| req.format == :html }

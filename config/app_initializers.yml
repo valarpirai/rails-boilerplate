@@ -1,4 +1,5 @@
 app_initializers:
+    - rack_attack
     - patches
     - regex
     - application_config
