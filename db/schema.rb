@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_012822) do
+ActiveRecord::Schema.define(version: 2020_09_20_105405) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid", limit: 36, null: false
@@ -30,6 +30,20 @@ ActiveRecord::Schema.define(version: 2020_07_10_012822) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_domain_mappings_on_account_id"
     t.index ["domain"], name: "index_domain_mappings_on_domain", unique: true
+  end
+
+  create_table "email_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.boolean "admin_notification", default: true
+    t.boolean "user_notification", default: true
+    t.integer "notification_type", default: 0, null: false
+    t.text "content"
+    t.integer "version", default: 1, null: false
+    t.text "options"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "notification_type"], name: "index_email_notifications_on_account_id_and_notification_type", unique: true
+    t.index ["account_id"], name: "index_email_notifications_on_account_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -63,4 +77,5 @@ ActiveRecord::Schema.define(version: 2020_07_10_012822) do
   end
 
   add_foreign_key "domain_mappings", "accounts"
+  add_foreign_key "email_notifications", "accounts"
 end
