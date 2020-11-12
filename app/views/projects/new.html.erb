@@ -1,1 +1,16 @@
+<div class="continer">
+<div class="col-6">
+
 <div>Create Project</div>
+
+<%= form_with model: @project, class: "nifty_form" do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <%= f.text_area :body, size: "60x12" %>
+  <%= f.submit "Create" %>
+<% end %>
+</div>
+<div class="col">
+</div>
+</div>

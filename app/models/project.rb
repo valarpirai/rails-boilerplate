@@ -1,7 +1,5 @@
 class Project < ApplicationRecord
-
   belongs_to_account
-
   before_create :set_uuid
 
   private

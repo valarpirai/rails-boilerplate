@@ -26,4 +26,12 @@ module Concerns::ApplicationConcern
   def request_host
     @request_host ||= request.host
   end
+
+  def cname
+    controller_name.singularize
+  end
+
+  def cname_params
+    params[cname]
+  end
 end

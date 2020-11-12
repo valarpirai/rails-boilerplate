@@ -11,4 +11,6 @@ class ApplicationController < ActionController::Base
   # rescue_from(ActionController::UnpermittedParameters) do |pme|
   #   render json: { error: { unknown_parameters: pme.params } }, status: :bad_request
   # end
+
+  # before_action :before_load_object, :load_object, :after_load_object, expect: 
 end

@@ -54,6 +54,8 @@ gem 'omniauth'
 # Rack middleware for blocking & throttling abusive requests
 gem 'rack-attack'
 
+gem 'request_store', '~> 1.0'
+
 # Load fixtures in DB
 gem 'seed-fu', '~> 2.3'
 

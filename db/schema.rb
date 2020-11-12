@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_102749) do
+ActiveRecord::Schema.define(version: 2020_11_12_113840) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid", limit: 36, null: false
@@ -21,6 +21,20 @@ ActiveRecord::Schema.define(version: 2020_11_12_102749) do
     t.datetime "updated_at", null: false
     t.index ["full_domain"], name: "index_accounts_on_full_domain", unique: true
     t.index ["uuid"], name: "index_accounts_on_uuid", unique: true
+  end
+
+  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.string "description", null: false
+    t.integer "notable_id", null: false
+    t.string "notable_type", null: false
+    t.text "activity_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "created_at"], name: "index_activities_on_account_id_and_created_at", unique: true
+    t.index ["account_id"], name: "index_activities_on_account_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "domain_mappings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -102,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_102749) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "activities", "accounts"
   add_foreign_key "domain_mappings", "accounts"
   add_foreign_key "email_notifications", "accounts"
   add_foreign_key "feature_flags", "accounts"

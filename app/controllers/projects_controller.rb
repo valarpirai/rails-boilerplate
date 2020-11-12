@@ -1,10 +1,15 @@
 class ProjectsController < ApplicationController
   def index
+    @projects = Project.all
   end
 
-  def new; end
+  def show; end
 
-  def create 
+  def new
+    @project = Project.new
+  end
+
+  def create
   end
 
   def edit

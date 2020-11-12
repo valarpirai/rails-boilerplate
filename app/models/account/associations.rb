@@ -9,4 +9,5 @@ class Account < ApplicationRecord
   has_many :projects, class_name: 'Project'
   has_many :feature_flags, class_name: 'FeatureFlag'
   has_many :environments, class_name: 'Environment'
+  has_many :activities, class_name: 'Activity'
 end
