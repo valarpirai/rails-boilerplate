@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_113840) do
     t.bigint "account_id", null: false
     t.string "name", null: false
     t.string "uuid", null: false
+    t.string "description"
     t.text "config"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

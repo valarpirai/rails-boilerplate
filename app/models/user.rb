@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def make_current
-    Thread.current[:user] = self
+    RequestStore[:user] = self
   end
 
   def name
@@ -32,11 +32,11 @@ class User < ApplicationRecord
 
   class << self
     def current
-      Thread.current[:user]
+      RequestStore[:user]
     end
 
     def reset_current
-      Thread.current[:user] = nil
+      RequestStore[:user] = nil
     end
   end
 end

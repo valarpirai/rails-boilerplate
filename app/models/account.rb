@@ -10,16 +10,16 @@ class Account < ApplicationRecord
   end
 
   def make_current
-    Thread.current[:account] = self
+    RequestStore[:account] = self
   end
 
   class << self
     def current
-      Thread.current[:account]
+      RequestStore[:account]
     end
 
     def reset_current
-      Thread.current[:account] = nil
+      RequestStore[:account] = nil
     end
 
     def fetch_by_full_domain(full_domain)

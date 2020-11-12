@@ -8,7 +8,7 @@ module Concerns::ApplicationConcern
   def set_current_account
     # begin
     current_account.make_current
-    current_user.make_current if user_signed_in?
+    # current_user.make_current if user_signed_in?
     # rescue ActiveRecord::RecordNotFound
     # end
   end
