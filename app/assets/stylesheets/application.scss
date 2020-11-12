@@ -16,3 +16,32 @@
 
  @import "bootstrap";
  
+ .container-fluid.page {
+   padding: 0px;
+ }
+
+ .hide {
+   display: none !important;
+ }
+
+ nav {
+  .top_nav_bg {
+    background: #12344D;
+    position: fixed;
+    width: 160px;
+    display: block;
+    height: 101%;
+    z-index: 1000;
+    margin-left: -16px;
+   }
+  .side-nav {
+    position: relative;
+    height: 100%;
+    min-height: 615px;
+  }
+ }
+
+ .content {
+  margin-top: 40px;
+ }
+ 
