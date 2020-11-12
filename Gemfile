@@ -54,9 +54,6 @@ gem 'omniauth'
 # Rack middleware for blocking & throttling abusive requests
 gem 'rack-attack'
 
-# Unique ID
-gem 'ruby_xid'
-
 # Load fixtures in DB
 gem 'seed-fu', '~> 2.3'
 

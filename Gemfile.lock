@@ -171,7 +171,6 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     ruby_dep (1.5.0)
-    ruby_xid (1.0.7)
     rubyzip (2.3.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -254,7 +253,6 @@ DEPENDENCIES
   puma (~> 3.11)
   rack-attack
   rails (~> 5.2.3)
-  ruby_xid
   sass-rails (~> 5.0)
   seed-fu (~> 2.3)
   selenium-webdriver

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_105405) do
+ActiveRecord::Schema.define(version: 2020_11_12_102749) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid", limit: 36, null: false
@@ -46,6 +46,32 @@ ActiveRecord::Schema.define(version: 2020_09_20_105405) do
     t.index ["account_id"], name: "index_email_notifications_on_account_id"
   end
 
+  create_table "feature_flags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "project_id", null: false
+    t.string "name", null: false
+    t.string "key", null: false
+    t.string "description"
+    t.text "variations"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "name"], name: "index_feature_flags_on_account_id_and_name", unique: true
+    t.index ["account_id"], name: "index_feature_flags_on_account_id"
+    t.index ["project_id"], name: "index_feature_flags_on_project_id"
+  end
+
+  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "name", null: false
+    t.string "uuid", null: false
+    t.text "config"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "uuid"], name: "index_projects_on_account_id_and_uuid", unique: true
+    t.index ["account_id"], name: "index_projects_on_account_id"
+    t.index ["uuid"], name: "index_projects_on_uuid", unique: true
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "account_id"
     t.string "first_name", null: false
@@ -78,4 +104,7 @@ ActiveRecord::Schema.define(version: 2020_09_20_105405) do
 
   add_foreign_key "domain_mappings", "accounts"
   add_foreign_key "email_notifications", "accounts"
+  add_foreign_key "feature_flags", "accounts"
+  add_foreign_key "feature_flags", "projects"
+  add_foreign_key "projects", "accounts"
 end

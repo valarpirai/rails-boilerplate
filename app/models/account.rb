@@ -3,11 +3,7 @@
 class Account < ApplicationRecord
   validates_uniqueness_of :full_domain
 
-  concerned_with :callbacks
-
-  has_many :users, lambda {
-    where(['deleted = false']).order(first_name: :asc, last_name: :asc) 
-  }, class_name: 'User'
+  concerned_with :callbacks, :associations
 
   def domain
     @domain ||= full_domain.blank? ? '' : full_domain.split('.').first

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   self.primary_key = :id
@@ -8,7 +7,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def set_account_id
-    self.account_id ||= self.account.id if self.account_id.nil? && !self.account.nil?
+    self.account_id ||= account.id if account_id.nil? && !account.nil?
   end
 
   class << self
