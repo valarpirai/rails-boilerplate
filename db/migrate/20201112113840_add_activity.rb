@@ -6,7 +6,7 @@ class AddActivity < ActiveRecord::Migration[5.2]
       t.string      :description, null: false
       t.integer     :notable_id, null: false
       t.string      :notable_type, null: false
-      t.text        :activity_date, default: nil
+      t.text        :activity_data, default: nil
       t.timestamps
     end
 

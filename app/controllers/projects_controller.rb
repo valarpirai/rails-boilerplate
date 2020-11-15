@@ -1,9 +1,9 @@
 class ProjectsController < ApplicationController
-  before_action :permit_params, only: [:create, :update]
-  before_action :load_object, only: [:show, :edit, :update, :destroy]
+  before_action :permit_params, only: %i[create update]
+  before_action :load_object, only: %i[show edit update destroy]
 
   def index
-    @projects = Project.all
+    @projects = Project.page params[:page]
   end
 
   def new

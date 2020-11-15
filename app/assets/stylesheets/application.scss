@@ -42,7 +42,10 @@
  }
 
  #body-container {
-  margin-top: 70px;
+  margin: 10px 20px;
+  .pagination {
+    margin: 10px auto;
+  }
  }
  .turbolinks-progress-bar {
   height: 3px;

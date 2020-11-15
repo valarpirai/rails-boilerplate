@@ -6,6 +6,7 @@ class AddFeatureFlags < ActiveRecord::Migration[5.2]
       t.string      :name, null: false
       t.string      :key, null: false
       t.string      :description
+      t.boolean     :deleted, default: false
       t.text        :variations, default: nil
       t.timestamps
     end
