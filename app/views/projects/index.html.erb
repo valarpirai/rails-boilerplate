@@ -1,9 +1,11 @@
-<%= link_to("create new project", new_project_path, class: 'nav-link') %>
+<div data-pjax>
+<%= link_to("create new project", new_project_path) %>
 <div>Projects</div>
 <ul>
 <% @projects.each do |project| %>
   <li>
-    <%= project.name %> - <%= project.uuid %>
+    <%= link_to(project.name, project_path(project), class: 'nav-link') %>
   </li>
 <% end %>
 </ul>
+</div>
