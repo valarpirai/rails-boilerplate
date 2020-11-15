@@ -1,1 +1,2 @@
-$(document).pjax('[data-pjax] a, a[data-pjax]', '#body-container');
+// $(document).pjax('[data-pjax] a, a[data-pjax]', '#body-container');
+Turbolinks.setProgressBarDelay(50)
