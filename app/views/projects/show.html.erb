@@ -1,3 +1,16 @@
 <div>
-Project Name: <span><%= @project.name %></span>
+Project Name: <span class="h1"><%= @project.name %></span>
+
+<div>
+<span class="h2">Feature Flags</span>
+<span class="h5">
+  <%= link_to("Create", new_project_feature_flag_path(@project.id), class: 'btn btn-primary') %>
+</span>
+<div class="list-group">
+<% @feature_flags.each do |feature_flag| %>
+  <%= link_to(feature_flag.name, project_feature_flag_path(feature_flag), class: 'list-group-item') %>
+<% end %>
+</div>
+<%= paginate @feature_flags %>
+</div>
 </div>

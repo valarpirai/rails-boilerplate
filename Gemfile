@@ -62,6 +62,8 @@ gem 'seed-fu', '~> 2.3'
 # Active Record Pagination
 gem 'kaminari', '1.2.1'
 
+gem 'rotp', '6.1.0'
+
 # gem 'active_presenter', git: 'https://github.com/jorgevaldivia/active_presenter'
 
 group :development, :test do

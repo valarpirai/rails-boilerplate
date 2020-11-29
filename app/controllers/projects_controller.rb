@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-
+    @feature_flags = @project.feature_flags.page params[:page]
   end
 
   def edit

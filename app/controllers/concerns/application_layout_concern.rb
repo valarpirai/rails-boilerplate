@@ -19,7 +19,7 @@ module Concerns::ApplicationLayoutConcern
   private
 
   def choose_layout
-    return PUBLIC_LAYOUT unless current_user
+    return PUBLIC_LAYOUT unless user_signed_in?
     pjax_request? ? MAINCONTENT_LAYOUT : APPLICATION_LAYOUT
   end
 

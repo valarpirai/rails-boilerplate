@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/login/normal' => 'users/sessions#new', as: :login_normal, constraints: lambda {|req| req.format == :html }
 
   resources :projects do
-    resources :project_features
+    resources :feature_flags, except: [:index]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
