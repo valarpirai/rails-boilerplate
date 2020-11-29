@@ -1,18 +1,18 @@
 <div>
-<span class="title">
-  <%= link_to("Create", new_project_path, class: 'btn btn-primary') %>
+  <h1 class="display-4">Projects</h1>
+  <span class="title mb-4">
+    <%= link_to("Create", new_project_path, class: 'btn btn-primary') %>
   </span>
-<span class="title">Projects</span>
-<div class="list-group">
-<% @projects.each do |project| %>
-  <div class="list-group-item">
-    <%= link_to(project.name, project_path(project.uuid), class: '') %>
-    <%= link_to('Show', project_path(project.uuid), class: 'badge badge-primary') %>
-    <%= link_to('Edit', edit_project_path(project.uuid), class: 'badge badge-light') %>
-    <%= link_to('Destroy', project_path(project.uuid), method: :delete, class: 'badge badge-danger') %>
-    <span class="badge badge-pill badge-info"><%= project.feature_flags.length %></span>
-    </div>
-<% end %>
-</div>
-<%= paginate @projects %>
+  <div class="list-group">
+  <% @projects.each do |project| %>
+    <div class="list-group-item">
+      <%= link_to(project.name, project_path(project.uuid), class: '') %>
+      <%= link_to('Show', project_path(project.uuid), class: 'badge badge-primary') %>
+      <%= link_to('Edit', edit_project_path(project.uuid), class: 'badge badge-light') %>
+      <%= link_to('Destroy', project_path(project.uuid), method: :delete, class: 'badge badge-danger') %>
+      <span class="badge badge-pill badge-info"><%= project.feature_flags.length %></span>
+      </div>
+  <% end %>
+  </div>
+  <%= paginate @projects %>
 </div>

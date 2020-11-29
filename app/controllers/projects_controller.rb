@@ -32,6 +32,12 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    @project.update_attributes(params[:project])
+    if @project.save
+      redirect_to projects_path
+    else
+      # throw error
+    end
   end
 
   def destroy
