@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_113840) do
+ActiveRecord::Schema.define(version: 2020_11_29_053026) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uuid", limit: 36, null: false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_113840) do
     t.string "description", null: false
     t.integer "notable_id", null: false
     t.string "notable_type", null: false
-    t.text "activity_date"
+    t.text "activity_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "created_at"], name: "index_activities_on_account_id_and_created_at", unique: true
@@ -60,12 +60,39 @@ ActiveRecord::Schema.define(version: 2020_11_12_113840) do
     t.index ["account_id"], name: "index_email_notifications_on_account_id"
   end
 
+  create_table "environment_config", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "environment_id", null: false
+    t.bigint "feature_flag_id", null: false
+    t.json "config"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "environment_id", "feature_flag_id"], name: "unique_config", unique: true
+    t.index ["account_id"], name: "index_environment_config_on_account_id"
+    t.index ["environment_id"], name: "index_environment_config_on_environment_id"
+    t.index ["feature_flag_id"], name: "index_environment_config_on_feature_flag_id"
+  end
+
+  create_table "environments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "project_id", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_environments_on_account_id"
+    t.index ["project_id"], name: "index_environments_on_project_id"
+  end
+
   create_table "feature_flags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "project_id", null: false
     t.string "name", null: false
     t.string "key", null: false
     t.string "description"
+    t.boolean "deleted", default: false
     t.text "variations"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -78,10 +105,10 @@ ActiveRecord::Schema.define(version: 2020_11_12_113840) do
     t.bigint "account_id", null: false
     t.string "name", null: false
     t.string "uuid", null: false
-    t.string "description"
     t.text "config"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
     t.index ["account_id", "uuid"], name: "index_projects_on_account_id_and_uuid", unique: true
     t.index ["account_id"], name: "index_projects_on_account_id"
     t.index ["uuid"], name: "index_projects_on_uuid", unique: true
@@ -120,6 +147,11 @@ ActiveRecord::Schema.define(version: 2020_11_12_113840) do
   add_foreign_key "activities", "accounts"
   add_foreign_key "domain_mappings", "accounts"
   add_foreign_key "email_notifications", "accounts"
+  add_foreign_key "environment_config", "accounts"
+  add_foreign_key "environment_config", "environments"
+  add_foreign_key "environment_config", "feature_flags"
+  add_foreign_key "environments", "accounts"
+  add_foreign_key "environments", "projects"
   add_foreign_key "feature_flags", "accounts"
   add_foreign_key "feature_flags", "projects"
   add_foreign_key "projects", "accounts"
