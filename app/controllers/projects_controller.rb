@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
   before_action :permit_params, only: %i[create update]
   before_action :load_object, only: %i[show edit update destroy]
+  before_action :load_environment, only: %i[show]
 
   def index
-    @projects = Project.includes(:feature_flags).page params[:page]
+    @projects = Project.includes([:feature_flags, :environments]).page params[:page]
   end
 
   def new
@@ -12,6 +13,8 @@ class ProjectsController < ApplicationController
 
   def create
     @project = current_account.projects.build(params[:project])
+    # Create default environment
+    @project.environments.push(Environment.new({ name: 'Production', description: '(default environment)' }))
     if @project.save
       respond_to do |format|
         format.html do
@@ -48,7 +51,11 @@ class ProjectsController < ApplicationController
   private
 
   def load_object
-    @project = current_account.projects.find_by(uuid: params[:id]) if params[:id]
+    @project ||= current_account.projects.find_by(uuid: params[:id]) if params[:id]
+  end
+
+  def load_environment
+    @environment = load_object.environments.first
   end
 
   def permit_params

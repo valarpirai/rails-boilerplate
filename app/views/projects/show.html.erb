@@ -1,10 +1,10 @@
 <div>
-Project Name: <span class="h1"><%= @project.name %></span>
+<h1 class="display-4"><%= @project.name %> <span class="text-muted lead"> Environment - <%= @environment.name %></span></h1>
 
 <div>
 <span class="h2">Feature Flags</span>
 <span class="h5">
-  <%= link_to("Create", new_project_feature_flag_path(@project.id), class: 'btn btn-primary') %>
+  <%= link_to("Create", new_project_feature_flag_path(@project.uuid), class: 'btn btn-primary') %>
 </span>
 <div class="list-group">
 <% @feature_flags.each do |feature_flag| %>

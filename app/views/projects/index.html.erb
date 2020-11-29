@@ -10,7 +10,8 @@
       <%= link_to('Show', project_path(project.uuid), class: 'badge badge-primary') %>
       <%= link_to('Edit', edit_project_path(project.uuid), class: 'badge badge-light') %>
       <%= link_to('Destroy', project_path(project.uuid), method: :delete, class: 'badge badge-danger') %>
-      <span class="badge badge-pill badge-info"><%= project.feature_flags.length %></span>
+      <span class="badge badge-pill badge-secondary">environments - <%= project.environments.length %></span>
+      <span class="badge badge-pill badge-info">features - <%= project.feature_flags.length %></span>
       </div>
   <% end %>
   </div>

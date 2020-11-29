@@ -1,6 +1,6 @@
 class EnvironmentConfig < ActiveRecord::Migration[5.2]
   def change
-    create_table :environment_config do |t|
+    create_table :environment_configs do |t|
       t.references  :account, foreign_key: true, null: false
       t.references  :environment, foreign_key: true, null: false
       t.references  :feature_flag, foreign_key: true, null: false
@@ -9,6 +9,6 @@ class EnvironmentConfig < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :environment_config, %i[account_id environment_id feature_flag_id], unique: true, name: :unique_config
+    add_index :environment_configs, %i[account_id environment_id feature_flag_id], unique: true, name: :unique_config
   end
 end

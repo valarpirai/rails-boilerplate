@@ -74,6 +74,20 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.index ["feature_flag_id"], name: "index_environment_config_on_feature_flag_id"
   end
 
+  create_table "environment_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "environment_id", null: false
+    t.bigint "feature_flag_id", null: false
+    t.json "config"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "environment_id", "feature_flag_id"], name: "unique_config", unique: true
+    t.index ["account_id"], name: "index_environment_configs_on_account_id"
+    t.index ["environment_id"], name: "index_environment_configs_on_environment_id"
+    t.index ["feature_flag_id"], name: "index_environment_configs_on_feature_flag_id"
+  end
+
   create_table "environments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "project_id", null: false
@@ -150,6 +164,9 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
   add_foreign_key "environment_config", "accounts"
   add_foreign_key "environment_config", "environments"
   add_foreign_key "environment_config", "feature_flags"
+  add_foreign_key "environment_configs", "accounts"
+  add_foreign_key "environment_configs", "environments"
+  add_foreign_key "environment_configs", "feature_flags"
   add_foreign_key "environments", "accounts"
   add_foreign_key "environments", "projects"
   add_foreign_key "feature_flags", "accounts"

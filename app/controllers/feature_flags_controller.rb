@@ -13,7 +13,7 @@ class FeatureFlagsController < ApplicationController
     if @feature_flag.save
       respond_to do |format|
         format.html do
-          redirect_to project_path(@parent)
+          redirect_to project_path(@parent.uuid)
         end
         format.html do
           render json: { status: :success, message: 'Feature flag created successfully' }, status: :ok

@@ -1,4 +1,4 @@
-class Environment < ApplicationRecord
+class EnvironmentConfig < ApplicationRecord
 
   belongs_to_account
 
