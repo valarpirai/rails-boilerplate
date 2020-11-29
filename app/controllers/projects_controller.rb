@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_action :load_object, only: %i[show edit update destroy]
 
   def index
-    @projects = Project.page params[:page]
+    @projects = Project.includes(:feature_flags).page params[:page]
   end
 
   def new
@@ -13,6 +13,14 @@ class ProjectsController < ApplicationController
   def create
     @project = current_account.projects.build(params[:project])
     if @project.save
+      respond_to do |format|
+        format.html do
+          redirect_to projects_path
+        end
+        format.html do
+          render json: { status: :success, message: 'Project created successfully' }, status: :ok
+        end
+      end
     end
   end
 
@@ -27,12 +35,14 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @project.destroy
+    redirect_to projects_path
   end
 
   private
 
   def load_object
-    @project = current_account.projects.find(params[:id]) if params[:id]
+    @project = current_account.projects.find_by(uuid: params[:id]) if params[:id]
   end
 
   def permit_params

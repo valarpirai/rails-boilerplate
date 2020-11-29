@@ -1,0 +1,16 @@
+<div class="continer">
+<div class="col-6">
+
+<div>Create Project</div>
+
+<%= form_with model: @project, class: "project-form" do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <%= f.text_field :description, class: 'form-control' %>
+  <%= f.submit "Save", class: 'btn btn-primary mt-4' %>
+<% end %>
+</div>
+<div class="col">
+</div>
+</div>

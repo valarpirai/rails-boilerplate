@@ -5,7 +5,13 @@
 <span class="title">Projects</span>
 <div class="list-group">
 <% @projects.each do |project| %>
-  <%= link_to(project.name, project_path(project), class: 'list-group-item') %>
+  <div class="list-group-item">
+    <%= link_to(project.name, project_path(project.uuid), class: '') %>
+    <%= link_to('Show', project_path(project.uuid), class: 'badge badge-primary') %>
+    <%= link_to('Edit', edit_project_path(project.uuid), class: 'badge badge-light') %>
+    <%= link_to('Destroy', project_path(project.uuid), method: :delete, class: 'badge badge-danger') %>
+    <span class="badge badge-pill badge-info"><%= project.feature_flags.length %></span>
+    </div>
 <% end %>
 </div>
 <%= paginate @projects %>

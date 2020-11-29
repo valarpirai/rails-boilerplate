@@ -41,7 +41,7 @@ class FeatureFlagsController < ApplicationController
   private
 
   def load_parent
-    @parent = current_account.projects.find(params[:project_id])
+    @parent = current_account.projects.find_by(uuid: params[:project_id])
   end
 
   def load_object
