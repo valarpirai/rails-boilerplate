@@ -1,2 +1,33 @@
+<div class="continer">
+<div class="col-6">
 
-<div>New Flag</div>
+<div>Create Feature Flag</div>
+
+<%= form_with url: project_feature_flags_path, model: @feature_flag, class: "feature-flag-form" do |f| %>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <%= f.text_field :name, class: 'form-control' %>
+    <small class="form-text text-muted">A human-friendly name for your feature.</small>
+  </div>
+  <div class="form-group">
+    <label for="key">Key</label>
+    <%= f.text_field :key, class: 'form-control' %>
+    <small class="form-text text-muted">Use this key in your code. Keys must only contain letters, numbers, ., _ or -.
+You cannot use new as a key.</small>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group hide">
+    <label for="type">Type</label>
+    <%= f.text_field :type, class: 'form-control' %>
+  </div>
+  <%= f.submit "Create", class: 'btn btn-primary mt-4' %>
+<% end %>
+</div>
+<div class="col">
+</div>
+</div>

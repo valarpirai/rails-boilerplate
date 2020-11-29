@@ -4,4 +4,6 @@ class FeatureFlag < ApplicationRecord
 
   serialize :variations, Hash
 
+  # validates unique ness
+
 end

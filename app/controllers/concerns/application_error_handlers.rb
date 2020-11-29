@@ -13,7 +13,7 @@ module Concerns::ApplicationErrorHandlers
     render file: "#{Rails.root}/public/404", formats: [:html], status: :not_found, layout: false
   end
 
-  JSON_404 = {errors: {error: "Record Not Found"}}.to_json
+  JSON_404 = { errors: { error: "Record Not Found" } }.to_json
   def record_not_found(exception = nil)
     respond_to do |format|
       format.html {
