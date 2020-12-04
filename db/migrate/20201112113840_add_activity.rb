@@ -1,7 +1,7 @@
 class AddActivity < ActiveRecord::Migration[5.2]
   def change
     create_table :activities do |t|
-      t.references  :account, foreign_key: true, null: false
+      t.references  :account, null: false
       t.references  :user, null: false
       t.string      :description, null: false
       t.integer     :notable_id, null: false
