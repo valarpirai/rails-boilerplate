@@ -8,5 +8,7 @@ class Environment < ActiveRecord::Migration[5.2]
       t.boolean     :deleted, default: false
       t.timestamps
     end
+
+    add_index :environments, %i[account_id project_id name], unique: true
   end
 end

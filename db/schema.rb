@@ -60,20 +60,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.index ["account_id"], name: "index_email_notifications_on_account_id"
   end
 
-  create_table "environment_config", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "environment_id", null: false
-    t.bigint "feature_flag_id", null: false
-    t.json "config"
-    t.boolean "deleted", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id", "environment_id", "feature_flag_id"], name: "unique_config", unique: true
-    t.index ["account_id"], name: "index_environment_config_on_account_id"
-    t.index ["environment_id"], name: "index_environment_config_on_environment_id"
-    t.index ["feature_flag_id"], name: "index_environment_config_on_feature_flag_id"
-  end
-
   create_table "environment_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "environment_id", null: false
@@ -96,6 +82,7 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id", "project_id", "name"], name: "index_environments_on_account_id_and_project_id_and_name", unique: true
     t.index ["account_id"], name: "index_environments_on_account_id"
     t.index ["project_id"], name: "index_environments_on_project_id"
   end
@@ -119,10 +106,12 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.bigint "account_id", null: false
     t.string "name", null: false
     t.string "uuid", null: false
+    t.string "description"
     t.text "config"
+    t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description"
+    t.index ["account_id", "name"], name: "index_projects_on_account_id_and_name", unique: true
     t.index ["account_id", "uuid"], name: "index_projects_on_account_id_and_uuid", unique: true
     t.index ["account_id"], name: "index_projects_on_account_id"
     t.index ["uuid"], name: "index_projects_on_uuid", unique: true
@@ -161,9 +150,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
   add_foreign_key "activities", "accounts"
   add_foreign_key "domain_mappings", "accounts"
   add_foreign_key "email_notifications", "accounts"
-  add_foreign_key "environment_config", "accounts"
-  add_foreign_key "environment_config", "environments"
-  add_foreign_key "environment_config", "feature_flags"
   add_foreign_key "environment_configs", "accounts"
   add_foreign_key "environment_configs", "environments"
   add_foreign_key "environment_configs", "feature_flags"
