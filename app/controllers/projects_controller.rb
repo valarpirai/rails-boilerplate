@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :permit_params, only: %i[create update]
-  before_action :load_object, only: %i[show edit update destroy]
+  before_action :permit_env_params, only: %i[create_environment]
+  before_action :load_object, only: %i[show edit update destroy create_environment change_environment]
   before_action :load_environment, only: %i[show]
 
   def index
@@ -31,6 +32,23 @@ class ProjectsController < ApplicationController
     @feature_flags = @project.feature_flags.page params[:page]
   end
 
+  def create_environment
+    env = @project.environments.new(params[:environment])
+    if env.save
+      redirect_to project_path(@project.uuid)
+    else
+    end
+  end
+
+  def change_environment
+    if @project.environments.where(id: params[:env_id]).exists?
+      session[:env] = params[:env_id].to_i
+      redirect_to project_path(@project.uuid)
+    else
+      render :nothing => true, :status => :bad_request
+    end
+  end
+
   def edit
   end
 
@@ -55,11 +73,17 @@ class ProjectsController < ApplicationController
   end
 
   def load_environment
-    @environment = load_object.environments.first
+    @environments ||= load_object.environments
+    @environment ||= @environments.select { |env| env.id == session[:env] }.first || @environments.first
+    session[:env] = @environment.id
   end
 
   def permit_params
     # params.require(:project).permit(project: %i[name description])
     params.require(:project).permit! #(:project, :name, :description)
+  end
+
+  def permit_env_params
+    params.require(:environment).permit!
   end
 end

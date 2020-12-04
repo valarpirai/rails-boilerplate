@@ -13,6 +13,10 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :feature_flags, except: [:index]
+    member do
+      post :create_environment
+      post :change_environment
+    end
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
