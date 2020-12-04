@@ -18,11 +18,14 @@
 <div>
   <span class="h2">Feature Flags</span>
   <span class="h5">
-    <%= link_to("Create", new_project_feature_flag_path(@project.uuid), class: 'btn btn-primary') %>
+    <button class="btn btn-primary" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</button>
   </span>
   <div class="list-group">
   <% @feature_flags.each do |feature_flag| %>
-    <%= link_to(feature_flag.name, project_feature_flag_path(@project.uuid, feature_flag), class: 'list-group-item') %>
+    <div class="list-group-item">
+      <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
+      <%= link_to('Edit', project_feature_flag_path(@project.uuid, feature_flag), class: 'badge badge-light') %>
+    </div>
   <% end %>
   </div>
   <%= paginate @feature_flags %>

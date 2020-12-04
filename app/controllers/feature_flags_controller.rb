@@ -6,6 +6,7 @@ class FeatureFlagsController < ApplicationController
 
   def new
     @feature_flag = FeatureFlag.new
+    render partial: 'new'
   end
 
   def create
@@ -28,6 +29,7 @@ class FeatureFlagsController < ApplicationController
   end
 
   def show
+    render partial: 'show'
   end
 
   def update

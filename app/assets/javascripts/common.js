@@ -10,3 +10,6 @@ jQuery(document).ready(function() {
     headers: { 'x-csrf-token': token }
   });
 });
+
+
+// Modal Specific code

@@ -1,7 +1,5 @@
 <div class="continer">
-<div class="col-6">
-
-<div>Create Feature Flag</div>
+<div class="col">
 
 <%= form_with url: project_feature_flags_path, model: @feature_flag, class: "feature-flag-form" do |f| %>
   <div class="form-group">
@@ -27,7 +25,5 @@ You cannot use new as a key.</small>
   </div>
   <%= f.submit "Create", class: 'btn btn-primary mt-4' %>
 <% end %>
-</div>
-<div class="col">
 </div>
 </div>

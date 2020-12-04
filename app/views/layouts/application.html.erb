@@ -15,8 +15,8 @@
   <body>
     <div class="container-fluid page">
       <%= render partial: '/shared/header' %>
-      <%= render partial: '/shared/toasts' %>
       <div id="body-container" class="content">
+      <%= render partial: '/shared/toasts' %>
       <% if notice.present? %>
         <p class="notice"><%= notice %></p>
       <% end %>
