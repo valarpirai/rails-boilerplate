@@ -37,6 +37,8 @@ class ProjectsController < ApplicationController
     if env.save
       redirect_to project_path(@project.uuid)
     else
+      flash[:messages] = env.errors.full_messages.to_sentence
+      redirect_to project_path(@project.uuid)
     end
   end
 

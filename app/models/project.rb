@@ -2,6 +2,8 @@ class Project < ApplicationRecord
   belongs_to_account
   before_create :set_uuid
 
+  validates_uniqueness_of :name
+
   has_many :feature_flags, class_name: 'FeatureFlag', dependent: :destroy
   has_many :environments, class_name: 'Environment', dependent: :destroy
 
