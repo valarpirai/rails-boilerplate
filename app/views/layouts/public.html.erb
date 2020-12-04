@@ -10,18 +10,18 @@
   </head>
 
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid page">
       <%= render partial: '/shared/public/header' %>
-      <div id="body-container" class="container content">
+      <div id="body-container" class="content public">
          <% if notice.present? %>
           <p class="notice"><%= notice %></p>
         <% end %>
         <% if alert.present? %>
           <p class="alert"><%= alert %></p>
         <% end %>
-          <div>
-            <%= yield %>
-          </div>
+        <div id="body-content">
+          <%= yield %>
+        </div>
       </div>
     </div>
   </body>

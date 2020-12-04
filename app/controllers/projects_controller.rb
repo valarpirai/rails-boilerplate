@@ -70,6 +70,8 @@ class ProjectsController < ApplicationController
 
   def load_object
     @project ||= current_account.projects.find_by(uuid: params[:id]) if params[:id]
+    raise ActiveRecord::RecordNotFound unless @project
+    @project
   end
 
   def load_environment

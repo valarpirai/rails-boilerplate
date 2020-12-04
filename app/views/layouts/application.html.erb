@@ -15,14 +15,14 @@
   <body>
     <div class="container-fluid page">
       <%= render partial: '/shared/header' %>
-      <div id="body-container"  class="content">
+      <div id="body-container" class="content">
       <% if notice.present? %>
         <p class="notice"><%= notice %></p>
       <% end %>
       <% if alert.present? %>
         <p class="alert"><%= alert %></p>
       <% end %>
-        <div id="body-container">
+        <div id="body-content">
           <%= yield %>
         </div>
       </div>
