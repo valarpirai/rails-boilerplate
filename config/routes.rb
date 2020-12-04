@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :feature_flags, except: [:index]
     member do
+      get :new_environment
       post :create_environment
       post :change_environment
     end

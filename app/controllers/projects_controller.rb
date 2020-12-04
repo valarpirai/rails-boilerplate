@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :permit_params, only: %i[create update]
   before_action :permit_env_params, only: %i[create_environment]
-  before_action :load_object, only: %i[show edit update destroy create_environment change_environment]
+  before_action :load_object, except: %i[index]
   before_action :load_environment, only: %i[show]
 
   def index
@@ -30,6 +30,10 @@ class ProjectsController < ApplicationController
 
   def show
     @feature_flags = @project.feature_flags.page params[:page]
+  end
+
+  def new_environment
+    render partial: 'new_environment'
   end
 
   def create_environment
