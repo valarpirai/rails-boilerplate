@@ -1,8 +1,8 @@
 class Environment < ActiveRecord::Migration[5.2]
   def change
     create_table :environments do |t|
-      t.references  :account, null: false
-      t.references  :project, null: false
+      t.bigint      :account_id, null: false
+      t.bigint      :project_id, null: false
       t.string      :name, null: false
       t.string      :description
       t.boolean     :deleted, default: false

@@ -3,7 +3,7 @@
 class DeviseCreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users do |t|
-      t.references :account
+      t.bigint :account_id, null: false
       t.string :first_name, null: false
       t.string :middle_name
       t.string :last_name

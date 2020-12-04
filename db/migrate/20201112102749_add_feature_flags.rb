@@ -1,8 +1,8 @@
 class AddFeatureFlags < ActiveRecord::Migration[5.2]
   def change
     create_table :feature_flags do |t|
-      t.references  :account, null: false
-      t.references  :project, null: false
+      t.bigint      :account_id, null: false
+      t.bigint      :project_id, null: false
       t.string      :name, null: false
       t.string      :key, null: false
       t.string      :description

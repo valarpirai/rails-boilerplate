@@ -1,7 +1,7 @@
 class CreateEmailNotifications < ActiveRecord::Migration[5.2]
   def change
     create_table :email_notifications do |t|
-      t.references  :account, null: false
+      t.bigint      :account_id, null: false
       t.boolean     :admin_notification, default: true
       t.boolean     :user_notification, default: true
       t.integer     :notification_type, default: 0, null: false

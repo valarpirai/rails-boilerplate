@@ -1,8 +1,8 @@
 class AddActivity < ActiveRecord::Migration[5.2]
   def change
     create_table :activities do |t|
-      t.references  :account, null: false
-      t.references  :user, null: false
+      t.bigint      :account_id, null: false
+      t.bigint      :user_id, null: false
       t.string      :description, null: false
       t.integer     :notable_id, null: false
       t.string      :notable_type, null: false

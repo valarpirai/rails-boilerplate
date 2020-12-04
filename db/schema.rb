@@ -33,8 +33,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "created_at"], name: "index_activities_on_account_id_and_created_at", unique: true
-    t.index ["account_id"], name: "index_activities_on_account_id"
-    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "domain_mappings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -42,7 +40,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.string "domain", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_domain_mappings_on_account_id"
     t.index ["domain"], name: "index_domain_mappings_on_domain", unique: true
   end
 
@@ -57,7 +54,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "notification_type"], name: "index_email_notifications_on_account_id_and_notification_type", unique: true
-    t.index ["account_id"], name: "index_email_notifications_on_account_id"
   end
 
   create_table "environment_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -69,9 +65,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "environment_id", "feature_flag_id"], name: "unique_config", unique: true
-    t.index ["account_id"], name: "index_environment_configs_on_account_id"
-    t.index ["environment_id"], name: "index_environment_configs_on_environment_id"
-    t.index ["feature_flag_id"], name: "index_environment_configs_on_feature_flag_id"
   end
 
   create_table "environments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -83,8 +76,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "project_id", "name"], name: "index_environments_on_account_id_and_project_id_and_name", unique: true
-    t.index ["account_id"], name: "index_environments_on_account_id"
-    t.index ["project_id"], name: "index_environments_on_project_id"
   end
 
   create_table "feature_flags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -98,8 +89,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name"], name: "index_feature_flags_on_account_id_and_name", unique: true
-    t.index ["account_id"], name: "index_feature_flags_on_account_id"
-    t.index ["project_id"], name: "index_feature_flags_on_project_id"
   end
 
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -113,12 +102,11 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "name"], name: "index_projects_on_account_id_and_name", unique: true
     t.index ["account_id", "uuid"], name: "index_projects_on_account_id_and_uuid", unique: true
-    t.index ["account_id"], name: "index_projects_on_account_id"
     t.index ["uuid"], name: "index_projects_on_uuid", unique: true
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "account_id"
+    t.bigint "account_id", null: false
     t.string "first_name", null: false
     t.string "middle_name"
     t.string "last_name"
@@ -142,20 +130,8 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email", "account_id"], name: "index_users_on_email_and_account_id", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "activities", "accounts"
-  add_foreign_key "domain_mappings", "accounts"
-  add_foreign_key "email_notifications", "accounts"
-  add_foreign_key "environment_configs", "accounts"
-  add_foreign_key "environment_configs", "environments"
-  add_foreign_key "environment_configs", "feature_flags"
-  add_foreign_key "environments", "accounts"
-  add_foreign_key "environments", "projects"
-  add_foreign_key "feature_flags", "accounts"
-  add_foreign_key "feature_flags", "projects"
-  add_foreign_key "projects", "accounts"
 end

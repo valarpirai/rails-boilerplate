@@ -1,9 +1,9 @@
 class EnvironmentConfig < ActiveRecord::Migration[5.2]
   def change
     create_table :environment_configs do |t|
-      t.references  :account, null: false
-      t.references  :environment, null: false
-      t.references  :feature_flag, null: false
+      t.bigint      :account_id, null: false
+      t.bigint      :environment_id, null: false
+      t.bigint      :feature_flag_id, null: false
       t.json        :config
       t.boolean     :deleted, default: false
       t.timestamps
