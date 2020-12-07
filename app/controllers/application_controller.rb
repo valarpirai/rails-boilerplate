@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   include Concerns::ApplicationConcern
   include Concerns::ApplicationErrorHandlers
 
+  before_action :authenticate_user!
+
+
   # Throw exception
   # ActionController::Parameters.action_on_unpermitted_parameters = :raise
   # rescue_from(ActionController::UnpermittedParameters) do |pme|
