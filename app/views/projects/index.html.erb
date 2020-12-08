@@ -1,7 +1,7 @@
 <div>
   <h1 class="display-4">Projects
   <span class="title mb-4">
-    <%= link_to("Create", new_project_path, class: 'btn btn-primary') %>
+    <button class="btn btn-primary" data-url="<%= new_project_path %>" data-modal data-title="Create Project">Create</button>
   </span>
   </h1>
   <div class="list-group">

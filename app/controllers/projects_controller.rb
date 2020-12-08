@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :permit_params, only: %i[create update]
   before_action :permit_env_params, only: %i[create_environment]
-  before_action :load_object, except: %i[index]
+  before_action :load_object, except: %i[index new create]
   before_action :load_environment, only: %i[show]
 
   def index
@@ -10,12 +10,13 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    render partial: 'new'
   end
 
   def create
     @project = current_account.projects.build(params[:project])
     # Create default environment
-    @project.environments.push(Environment.new({ name: 'Production', description: '(default environment)' }))
+    @project.environments.push(Environment.new({ name: 'Production', description: '(default environment)', project: @project }))
     if @project.save
       respond_to do |format|
         format.html do
@@ -25,6 +26,9 @@ class ProjectsController < ApplicationController
           render json: { status: :success, message: 'Project created successfully' }, status: :ok
         end
       end
+    else
+      flash[:messages] = @project.errors.full_messages.to_sentence
+      redirect_to projects_path
     end
   end
 
@@ -47,9 +51,8 @@ class ProjectsController < ApplicationController
   end
 
   def change_environment
-    if @project.environments.where(id: params[:env_id]).exists?
-      session[:env] = params[:env_id].to_i
-      redirect_to project_path(@project.uuid)
+    if @project.environments.where(name: params[:env]).exists?
+      redirect_to project_path(@project.uuid, env: params[:env])
     else
       render :nothing => true, :status => :bad_request
     end
@@ -82,7 +85,7 @@ class ProjectsController < ApplicationController
 
   def load_environment
     @environments ||= load_object.environments
-    @environment ||= @environments.select { |env| env.id == session[:env] }.first || @environments.first
+    @environment ||= @environments.select { |env| env.name == params[:env] }.first || @environments.first
     session[:env] = @environment.id
   end
 

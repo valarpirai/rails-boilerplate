@@ -1,8 +1,5 @@
 <div class="continer">
-<div class="col-6">
-
-<h1 class="display-4">Create Project</h1>
-
+<div class="col">
 <%= form_with model: @project, class: "project-form" do |f| %>
   <div class="form-group">
     <label for="name">Name</label>
@@ -14,7 +11,5 @@
     </div>
   <%= f.submit "Create", class: 'btn btn-primary mt-4' %>
 <% end %>
-</div>
-<div class="col">
 </div>
 </div>

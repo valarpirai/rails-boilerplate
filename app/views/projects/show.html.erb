@@ -33,7 +33,7 @@
 
 <script>
   jQuery('#environment-select').on('change', function() {
-    var url = '<%= change_environment_project_path(@project.uuid) %>?env_id=' + this.value;
+    var url = '<%= change_environment_project_path(@project.uuid) %>?env=' + this.selectedOptions[0].text;
     jQuery.ajax({
     url: url,
     type: 'POST',
