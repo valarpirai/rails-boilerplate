@@ -39,7 +39,6 @@
 
   jQuery(function() {
     jQuery('[data-modal]').on('click', function(e) {
-      console.log('log')
       target = jQuery(e.target)
       $('#commonModal .modal-title').text(target.data('title'))
       url = target.data('url')

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get :new_environment
       post :create_environment
       post :change_environment
+      delete :destroy_environment
     end
   end
 

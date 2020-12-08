@@ -58,6 +58,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def destroy_environment
+    @project.environments.find_by(name: params[:env]).destroy
+    redirect_to project_path(@project.uuid)
+  end
+
   def edit
   end
 

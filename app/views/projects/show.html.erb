@@ -12,7 +12,8 @@
     </select>
   </div>
   <div class="col-3">
-    <button type="button" class="btn btn-primary" data-modal data-url="<%= new_environment_project_path(@project.uuid) %>" data-title="Create environment">Create environment</button>
+    <button type="button" class="btn btn-primary" data-modal data-url="<%= new_environment_project_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
+    <%= link_to('Destroy', destroy_environment_project_path(@project.uuid, env: params[:env] ), method: :delete, class: 'btn btn-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
   </div>
 </div>
 <div>
@@ -43,5 +44,4 @@
     }});
   });
 </script>
-
 </div>

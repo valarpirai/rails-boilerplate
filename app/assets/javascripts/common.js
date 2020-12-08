@@ -1,15 +1,15 @@
 // $(document).pjax('[data-pjax] a, a[data-pjax]', '#body-container');
 Turbolinks.setProgressBarDelay(100)
 
-jQuery(document).ready(function() {
+jQuery(function() {
   var func = function(xhr, data) {
-      return true;
+    return true;
   };
   var token = jQuery('meta[name="csrf-token"]').attr('content')
   jQuery.ajaxSetup({ beforeSend: func,
     headers: { 'x-csrf-token': token }
   });
+
+  // Tooltip
+  jQuery('[data-toggle="tooltip"]').tooltip()
 });
-
-
-// Modal Specific code
