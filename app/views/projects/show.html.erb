@@ -24,7 +24,8 @@
   <% @feature_flags.each do |feature_flag| %>
     <div class="list-group-item">
       <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
-      <%= link_to('Edit', project_feature_flag_path(@project.uuid, feature_flag), class: 'badge badge-light') %>
+      <a class="badge badge-light" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</a>
+      <span class="badge bg-primary rounded-pill" data-modal data-title="Add properties" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Add Properties</span>
     </div>
   <% end %>
   </div>

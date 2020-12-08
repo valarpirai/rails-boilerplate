@@ -1,6 +1,6 @@
 <div class="">
 
-<%= form_with url: project_feature_flags_path, model: @feature_flag, class: "feature-flag-form" do |f| %>
+<%= form_with url: project_feature_flag_path, model: @feature_flag, class: "feature-flag-form" do |f| %>
   <div class="form-group">
     <label for="name">Name</label>
     <%= f.text_field :name, class: 'form-control' %>
@@ -22,6 +22,6 @@ You cannot use new as a key.</small>
     <label for="type">Type</label>
     <%= f.text_field :type, class: 'form-control' %>
   </div>
-  <%= f.submit "Create", class: 'btn btn-primary mt-4' %>
+  <%= f.submit "Update", class: 'btn btn-primary mt-4' %>
 <% end %>
 </div>

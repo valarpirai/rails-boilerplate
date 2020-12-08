@@ -1,5 +1,5 @@
 <%= form_with url: create_environment_project_path(@project.uuid), model: @project.environments.new, class: "environment-form" do |f| %>
-<div class="modal-body">
+<div class="">
     <div class="form-group">
       <label for="name">Name</label>
       <%= f.text_field :name, class: 'form-control' %>
@@ -9,7 +9,7 @@
       <%= f.text_field :description, class: 'form-control' %>
       </div>
 </div>
-<div class="modal-footer">
+<div class="">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
   <%= f.submit "Create", class: 'btn btn-primary' %>
 </div>

@@ -26,6 +26,7 @@ class FeatureFlagsController < ApplicationController
   end
 
   def edit
+    render partial: 'edit'
   end
 
   def show
@@ -33,6 +34,10 @@ class FeatureFlagsController < ApplicationController
   end
 
   def update
+    # Update Flag properties
+  end
+
+  def update_properties
   end
 
   def destroy
@@ -44,11 +49,13 @@ class FeatureFlagsController < ApplicationController
 
   def load_parent
     @parent = current_account.projects.find_by(uuid: params[:project_id])
+    raise ActiveRecord::RecordNotFound unless @parent
+    @parent
   end
 
   def load_object
     load_parent
-    @flag = @parent.feature_flags.find(params[:id]) if params[:id]
+    @feature_flag = @parent.feature_flags.find(params[:id]) if params[:id]
   end
 
   def permit_params
