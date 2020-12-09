@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   get '/login/normal' => 'users/sessions#new', as: :login_normal, constraints: lambda {|req| req.format == :html }
 
   resources :projects do
-    resources :feature_flags, except: [:index]
+    resources :feature_flags, except: [:index] do
+      member do
+        post :update_properties
+      end
+    end
     member do
       get :new_environment
       post :create_environment

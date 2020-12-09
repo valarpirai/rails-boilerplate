@@ -72,10 +72,13 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.bigint "project_id", null: false
     t.string "name", null: false
     t.string "description"
+    t.string "client_id", null: false
+    t.string "api_key", null: false
     t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "project_id", "name"], name: "index_environments_on_account_id_and_project_id_and_name", unique: true
+    t.index ["api_key"], name: "index_environments_on_api_key", unique: true
   end
 
   create_table "feature_flags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -86,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.string "description"
     t.boolean "deleted", default: false
     t.text "variations"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name"], name: "index_feature_flags_on_account_id_and_name", unique: true
