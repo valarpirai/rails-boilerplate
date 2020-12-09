@@ -8,6 +8,7 @@ class AddFeatureFlags < ActiveRecord::Migration[5.2]
       t.string      :description
       t.boolean     :deleted, default: false
       t.text        :variations, default: nil
+      t.datetime    :deleted_at, default: nil
       t.timestamps
     end
 

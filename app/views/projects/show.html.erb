@@ -21,12 +21,13 @@
   <span class="h5">
     <button class="btn btn-primary" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</button>
   </span>
-  <div class="list-group">
+  <div class="list-group mt-4">
   <% @feature_flags.each do |feature_flag| %>
     <div class="list-group-item">
-      <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
+      <a href="#" data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></a>
       <a class="badge badge-light" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</a>
       <span class="badge bg-primary rounded-pill" data-modal data-title="Add properties" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Add Properties</span>
+      <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature", data: { confirm: "Are you sure want to delete?", tooltip: "true" } ) %>
     </div>
   <% end %>
   </div>

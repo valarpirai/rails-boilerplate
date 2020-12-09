@@ -10,18 +10,13 @@ class FeatureFlagsController < ApplicationController
   end
 
   def create
-    @feature_flag = @parent.feature_flags.build(params[:feature_flag])
-    if @feature_flag.save
-      respond_to do |format|
-        format.html do
-          redirect_to project_path(@parent.uuid)
-        end
-        format.html do
-          render json: { status: :success, message: 'Feature flag created successfully' }, status: :ok
-        end
-      end
+    feature_flag = @parent.feature_flags.new(params[:feature_flag])
+    if feature_flag.save
+      redirect_to_back project_path(@parent.uuid)
     else
-      render json: { status: :failure, message: 'Something went wrong..' }, status: :intenal_server_error
+      flash[:title] = 'Create Flag error'
+      flash[:messages] = feature_flag.errors.full_messages.to_sentence
+      redirect_to_back project_path(@parent.uuid)
     end
   end
 
@@ -41,8 +36,10 @@ class FeatureFlagsController < ApplicationController
   end
 
   def destroy
-    @flag.deleted = true
-    @flag.save
+    @feature_flag.deleted = true
+    @feature_flag.save
+    # Redirect to current path
+    redirect_to_back project_path(@parent.uuid)
   end
 
   private

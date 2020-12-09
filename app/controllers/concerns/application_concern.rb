@@ -34,4 +34,12 @@ module Concerns::ApplicationConcern
   def cname_params
     params[cname]
   end
+
+  def redirect_to_back(default = root_url)
+    if request.env['HTTP_REFERER'].present? and request.env['HTTP_REFERER'] != request.env['REQUEST_URI']
+      redirect_to request.env['HTTP_REFERER']
+    else
+      redirect_to default
+    end
+  end
 end

@@ -4,12 +4,11 @@
     <button class="btn btn-primary" data-url="<%= new_project_path %>" data-modal data-title="Create Project">Create</button>
   </span>
   </h1>
-  <div class="list-group">
+  <div class="list-group mt-4">
   <% @projects.each do |project| %>
     <div class="list-group-item">
       <%= link_to(project.name, project_path(project.uuid), class: '') %>
-      <%= link_to('Show', project_path(project.uuid), class: 'badge badge-primary') %>
-      <%= link_to('Edit', edit_project_path(project.uuid), class: 'badge badge-light') %>
+      <%= link_to('Edit', edit_project_path(project.uuid), class: 'badge badge-secondary') %>
       <%= link_to('Destroy', project_path(project.uuid), method: :delete, class: 'badge badge-danger', data: { confirm: "Are you sure want to delete?" } ) %>
       <span class="badge badge-pill badge-secondary">environments - <%= project.environments.length %></span>
       <span class="badge badge-pill badge-info">features - <%= project.feature_flags.length %></span>

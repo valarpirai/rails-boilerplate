@@ -6,6 +6,21 @@ class FeatureFlag < ApplicationRecord
 
   serialize :variations, Hash
 
-  # validates unique ness
+  before_update :set_deleted_at, if: :deleted?
+
+  default_scope do
+    where(deleted: false)
+  end
+
+
+  private
+
+  def set_deleted_at
+    self.deleted_at = Time.now.utc
+  end
+
+  def deleted?
+    self.changes.has_key?(:deleted)
+  end
 
 end

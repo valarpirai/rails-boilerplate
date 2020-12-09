@@ -43,10 +43,10 @@ class ProjectsController < ApplicationController
   def create_environment
     env = @project.environments.new(params[:environment])
     if env.save
-      redirect_to project_path(@project.uuid)
+      redirect_to_back project_path(@project.uuid)
     else
       flash[:messages] = env.errors.full_messages.to_sentence
-      redirect_to project_path(@project.uuid)
+      redirect_to_back project_path(@project.uuid)
     end
   end
 
