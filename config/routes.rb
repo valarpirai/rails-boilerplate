@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :feature_flags, except: [:index] do
       member do
+        get :edit_properties
         post :update_properties
       end
     end

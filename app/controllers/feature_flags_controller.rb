@@ -1,6 +1,6 @@
 class FeatureFlagsController < ApplicationController
 
-  before_action :load_object, only: %i[show edit update destroy]
+  before_action :load_object, only: %i[show edit update destroy edit_properties]
   before_action :load_parent, only: %i[create]
   before_action :permit_params, only: %i[create update]
 
@@ -29,10 +29,26 @@ class FeatureFlagsController < ApplicationController
   end
 
   def update
-    # Update Flag properties
+    # @feature_flag.choices = params[:feature_flag][:choices]
+    # @feature_flag.name = params[:feature_flag][:name]
+    # @feature_flag.key = params[:feature_flag][:key]
+    # @feature_flag.description = params[:feature_flag][:description]
+    
+    if @feature_flag.update_attributes(params[:feature_flag])
+      redirect_to_back project_path(@parent.uuid)
+    else
+      flash[:title] = 'Update Flag error'
+      flash[:messages] = @feature_flag.errors.full_messages.to_sentence
+      redirect_to_back project_path(@parent.uuid)
+    end
+  end
+  
+  def edit_properties
+    render partial: 'edit_properties'
   end
 
   def update_properties
+    # Update Flag properties
   end
 
   def destroy

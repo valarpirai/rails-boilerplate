@@ -1,38 +1,47 @@
 <div class="col">
 <h1 class="display-4"><%= @project.name %></h1>
 <div class="row">
-  <div class="input-group mb-3 col-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="environment-select">Environment</label>
+  <div class="mb-3 col-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="environment-select">Environment</label>
+      </div>
+      <select class="custom-select" id="environment-select">
+        <% @environments.each do |env| %>
+          <option value="<%= env.id %>" <%= env.id == @environment.id ? 'selected' : '' %>> <%= "#{env.name}" %></option>
+        <% end %>
+      </select>
     </div>
-    <select class="custom-select" id="environment-select">
-      <% @environments.each do |env| %>
-        <option value="<%= env.id %>" <%= env.id == @environment.id ? 'selected' : '' %>> <%= "#{env.name}" %></option>
-      <% end %>
-    </select>
   </div>
   <div class="col-3">
-    <button type="button" class="btn btn-primary" data-modal data-url="<%= new_environment_project_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
-    <%= link_to('Destroy', destroy_environment_project_path(@project.uuid, env: params[:env] ), method: :delete, class: 'btn btn-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
+    <button type="button" class="btn btn-outline-primary" data-modal data-url="<%= new_environment_project_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
+    <%= link_to('Destroy', destroy_environment_project_path(@project.uuid, env: params[:env] ), method: :delete, class: 'btn btn-outline-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
+  </div>
+  <div class="col-4">
+  <div class="card">
+    <div class="card-body">
+      <span>API Key: <%= @environment.api_key %></span> <span class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Copy to clipboard">Copy</span>
+    </div>
+  </div>
   </div>
 </div>
-<div>
+<div class="col-6">
   <span class="h2">Feature Flags</span>
   <span class="h5">
-    <button class="btn btn-primary" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</button>
+    <button class="btn btn-outline-primary float-right" title="Create Feature flag" data-toggle="tooltip" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</button>
   </span>
   <div class="list-group mt-4">
   <% @feature_flags.each do |feature_flag| %>
     <div class="list-group-item">
-      <a href="#" data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></a>
-      <a class="badge badge-light" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</a>
-      <span class="badge bg-primary rounded-pill" data-modal data-title="Add properties" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Add Properties</span>
-      <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature", data: { confirm: "Are you sure want to delete?", tooltip: "true" } ) %>
+      <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
+      <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</span>
+      <span class="badge badge-primary" data-modal data-title="Edit properties" data-url="<%= edit_properties_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit Properties</span>
+      <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
     </div>
   <% end %>
   </div>
-  <%= paginate @feature_flags %>
-  </div>
+    <%= paginate @feature_flags %>
+</div>
 
 <script>
   jQuery('#environment-select').on('change', function() {

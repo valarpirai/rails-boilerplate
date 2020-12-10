@@ -12,6 +12,7 @@ class AddFeatureFlags < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :feature_flags, %i[account_id name], unique: true
+    add_index :feature_flags, %i[account_id name]
+    add_index :feature_flags, %i[project_id name]
   end
 end
