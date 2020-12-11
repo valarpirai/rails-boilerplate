@@ -2,6 +2,7 @@ class FeatureFlagsController < ApplicationController
 
   before_action :load_object, only: %i[show edit update destroy edit_properties]
   before_action :load_parent, only: %i[create]
+  before_action :build_params, only: %i[create update]
   before_action :permit_params, only: %i[create update]
 
   def new
@@ -29,11 +30,6 @@ class FeatureFlagsController < ApplicationController
   end
 
   def update
-    # @feature_flag.choices = params[:feature_flag][:choices]
-    # @feature_flag.name = params[:feature_flag][:name]
-    # @feature_flag.key = params[:feature_flag][:key]
-    # @feature_flag.description = params[:feature_flag][:description]
-    
     if @feature_flag.update_attributes(params[:feature_flag])
       redirect_to_back project_path(@parent.uuid)
     else
@@ -73,6 +69,10 @@ class FeatureFlagsController < ApplicationController
 
   def permit_params
     params.require(:feature_flag).permit!
-    params[:feature_flag].delete(:type)
+  end
+
+  def build_params
+    params[:feature_flag][:type] = params[:type]
+    params[:feature_flag][:default_choices] = { on: params['on-select'], off: params['off-select'] }
   end
 end

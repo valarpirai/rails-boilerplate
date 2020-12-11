@@ -20,20 +20,20 @@ You cannot use new as a key.</small>
 
   <div class="form-group">
     <label for="type">Variation Type</label>
-    <%= select_tag :choices, flag_variation_types, class: 'form-control' %>
+    <%= select_tag :type, flag_variation_types, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group variation-form">
     <label for="variation1">Variation 1</label>
-    <%= f.text_field :variation_1, class: 'form-control', value: 'True' %>
+    <%= f.text_field :choices, class: 'form-control', value: 'True', multiple: true %>
   </div>
 
   <div class="form-group">
     <label for="variation1">Variation 2</label>
-    <%= f.text_field :variation_2, class: 'form-control', value: 'False' %>
+    <%= f.text_field :choices, class: 'form-control', value: 'False', multiple: true %>
   </div>
 
-  <span class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Add Variation">Add Variation</span>
+  <span id="add_variation" class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Add Variation">Add Variation</span>
 
   <div class="container row">
     <div class="col-12">Default Variations</div>
@@ -41,9 +41,9 @@ You cannot use new as a key.</small>
       <div class="input-group-prepend">
         <label class="input-group-text" for="on-select">On</label>
       </div>
-      <select class="custom-select" id="on-select">
-        <option value="variation1">Variation 1</option>
-        <option value="variation2">Variation 2</option>
+      <select class="custom-select" name="on-select">
+        <option value="0" selected>Variation 1</option>
+        <option value="1">Variation 2</option>
       </select>
     </div>
 
@@ -51,9 +51,9 @@ You cannot use new as a key.</small>
       <div class="input-group-prepend">
         <label class="input-group-text" for="off-select">Off</label>
       </div>
-      <select class="custom-select" id="off-select">
-        <option value="variation1">Variation 1</option>
-        <option value="variation2" selected>Variation 2</option>
+      <select class="custom-select" name="off-select">
+        <option value="0">Variation 1</option>
+        <option value="1" selected>Variation 2</option>
       </select>
     </div>
   </div>
@@ -68,6 +68,10 @@ jQuery(function () {
     key = this.value.replace(/[^a-z0-9\-_]/gi, '_').replace(/[_]+/g, '_')
     feature_key.val(key);
   })
+
+  jQuery('#add_variation').click(function () {
+    // jQuery('.variation-form')
+  });
 });
 </script>
 </div>

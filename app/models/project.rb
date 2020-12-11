@@ -14,6 +14,9 @@ class Project < ApplicationRecord
   end
 
   def unique_name?
-    errors.add(:name, " must be unique") if account.projects.where(name: self.name).exists?
+    errors.add(:name, " must be present") and return unless self.name
+    conditions = ["name = '#{self.name}'"]
+    conditions << " and id <> #{self.id}" unless new_record?
+    errors.add(:name, " must be unique") if account.projects.where(conditions.join).exists?
   end
 end

@@ -37,6 +37,10 @@
       <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</span>
       <span class="badge badge-primary" data-modal data-title="Edit properties" data-url="<%= edit_properties_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit Properties</span>
       <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
+      <div class="custom-control custom-checkbox float-right">
+        <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>">
+        <label class="custom-control-label" for="on-off-<%= feature_flag.name %>">Turn On</label>
+      </div>
     </div>
   <% end %>
   </div>

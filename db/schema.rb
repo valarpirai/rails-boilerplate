@@ -88,11 +88,12 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.string "key", null: false
     t.string "description"
     t.boolean "deleted", default: false
-    t.text "variations"
+    t.text "configs"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id", "name"], name: "index_feature_flags_on_account_id_and_name", unique: true
+    t.index ["account_id", "name"], name: "index_feature_flags_on_account_id_and_name"
+    t.index ["project_id", "name"], name: "index_feature_flags_on_project_id_and_name"
   end
 
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
