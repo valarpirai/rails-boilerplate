@@ -2,14 +2,23 @@ class FeatureFlag < ApplicationRecord
   belongs_to_account
   belongs_to :project, class_name: 'Project'
 
-  attr_accessor :choices
+  attr_accessor :type, :choices, :default_choices
+
+  VARIATION_TYPES = [
+    [1, :boolean, "Boolean"],
+    [2, :string, "String"],
+    [3, :Number, "Number"],
+    [4, :JSON, "JSON"],
+  ].freeze
+
+  VARIATION_TYPES_FOR_SELECT = Hash[VARIATION_TYPES.map { |info| [info[2], info[0]] }]
 
   KEY_REGEX = /^[A-Za-z0-9\-_]*$/
 
   validate :unique_name?
   validate :key_validity
 
-  serialize :variations, Array
+  serialize :variations, Hash
 
   before_update :set_deleted_at, if: :deleted?
 
@@ -18,7 +27,8 @@ class FeatureFlag < ApplicationRecord
   end
 
   def choices
-    self.variations.join(', ')
+    return '' unless self.variations[:choices]
+    self.variations[:choices].join(', ')
   end
 
   def choices=(value)

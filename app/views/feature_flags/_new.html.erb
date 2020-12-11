@@ -19,9 +19,55 @@ You cannot use new as a key.</small>
   </div>
 
   <div class="form-group">
-    <label for="choices">Choices</label>
-    <%= f.text_field :choices, class: 'form-control' %>
+    <label for="type">Variation Type</label>
+    <%= select_tag :choices, flag_variation_types, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+    <label for="variation1">Variation 1</label>
+    <%= f.text_field :variation_1, class: 'form-control', value: 'True' %>
+  </div>
+
+  <div class="form-group">
+    <label for="variation1">Variation 2</label>
+    <%= f.text_field :variation_2, class: 'form-control', value: 'False' %>
+  </div>
+
+  <span class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Add Variation">Add Variation</span>
+
+  <div class="container row">
+    <div class="col-12">Default Variations</div>
+    <div class="input-group col-6">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="on-select">On</label>
+      </div>
+      <select class="custom-select" id="on-select">
+        <option value="variation1">Variation 1</option>
+        <option value="variation2">Variation 2</option>
+      </select>
+    </div>
+
+    <div class="input-group col-6">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="off-select">Off</label>
+      </div>
+      <select class="custom-select" id="off-select">
+        <option value="variation1">Variation 1</option>
+        <option value="variation2" selected>Variation 2</option>
+      </select>
+    </div>
+  </div>
+
   <%= f.submit "Create", class: 'btn btn-primary mt-4' %>
 <% end %>
+<script>
+// Copy name value to key fields
+jQuery(function () {
+  feature_key = jQuery('.feature-flag-form #feature_flag_key')
+  jQuery('.feature-flag-form #feature_flag_name').keyup(function(e) {
+    key = this.value.replace(/[^a-z0-9\-_]/gi, '_').replace(/[_]+/g, '_')
+    feature_key.val(key);
+  })
+});
+</script>
 </div>
