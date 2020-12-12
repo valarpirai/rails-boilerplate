@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
+  # TODO - Restrict only HTML response
+
   # Throw exception
   # ActionController::Parameters.action_on_unpermitted_parameters = :raise
   # rescue_from(ActionController::UnpermittedParameters) do |pme|

@@ -23,6 +23,7 @@ class EnvironmentsController < ApplicationController
 
     env_config.configs[:state] = :on
     env_config.save
+    ActionCable.server.broadcast 'messages', message: env_config.configs.to_json, user: env_config.feature_flag.name
     redirect_to_back project_path(@project.uuid)
   end
 
@@ -32,6 +33,7 @@ class EnvironmentsController < ApplicationController
 
     env_config.configs[:state] = :off
     env_config.save
+    ActionCable.server.broadcast 'messages', message: env_config.configs.to_json, user: env_config.feature_flag.name
     redirect_to_back project_path(@project.uuid)
   end
 

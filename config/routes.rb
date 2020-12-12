@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get '/accounts/signup' => 'accounts#new'
   post '/accounts/signup' => 'accounts#signup'
 
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   # To Override - configure other modules
   devise_for :users, controllers: {
     sessions: 'users/sessions', registrations: 'users/registrations', confirmations: 'users/confirmations', passwords: 'users/passwords', unlocks: 'users/unlocks'

@@ -8,6 +8,7 @@ class Environment < ApplicationRecord
   before_create :set_client_id
 
   private
+
   def set_client_id
     self.client_id = SecureRandom.hex(7)
     self.api_key = "rbx-#{SecureRandom.hex(10)}"

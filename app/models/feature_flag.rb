@@ -3,7 +3,7 @@ class FeatureFlag < ApplicationRecord
 
   belongs_to_account
   belongs_to :project, class_name: 'Project'
-  has_many :environment_configs, class_name: 'EnvironmentConfig', dependent: :destroy
+  has_many :environment_configs, class_name: 'EnvironmentConfig', dependent: :destroy, inverse_of: :feature_flag
 
   validate :unique_name?
   validate :key_validity

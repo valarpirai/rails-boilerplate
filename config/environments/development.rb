@@ -82,4 +82,6 @@ Rails.application.configure do
   require "#{Rails.root}/lib/middleware/disable_assets_logger"
   config.middleware.insert_before Rails::Rack::Logger, Middleware::DisableAssetsLogger
 
+  config.action_cable.url = "ws://localhost:3001/cable"
+  config.action_cable.allowed_request_origins = [%r{https?://\S+}]
 end
