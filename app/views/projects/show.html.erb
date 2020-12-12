@@ -32,14 +32,15 @@
   </span>
   <div class="list-group mt-4">
   <% @feature_flags.each do |feature_flag| %>
+    <% flag_conf = @configs[feature_flag.id] ? @configs[feature_flag.id].configs : {} %>
     <div class="list-group-item">
       <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
       <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</span>
       <span class="badge badge-primary" data-modal data-title="Edit properties" data-url="<%= edit_properties_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit Properties</span>
       <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
       <div class="custom-control custom-checkbox float-right">
-        <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>">
-        <label class="custom-control-label" for="on-off-<%= feature_flag.name %>">Off</label>
+        <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>" data-flag-id=<%= feature_flag.id %> <%= flag_conf[:state].eql?(:on) ? 'checked' : '' %>>
+        <label class="custom-control-label" for="on-off-<%= feature_flag.name %>"><%=(  flag_conf[:state] || 'off') %></label>
       </div>
     </div>
   <% end %>
@@ -51,11 +52,33 @@
   jQuery('#environment-select').on('change', function() {
     var url = '<%= project_change_environment_path(@project.uuid) %>?env=' + this.selectedOptions[0].text;
     jQuery.ajax({
-    url: url,
-    type: 'POST',
-    success: function(result) {
-      console.log(result)
-    }});
+      url: url,
+      type: 'POST',
+      success: function(result) {
+        console.log('Changing environment');
+      }
+    });
+  });
+
+  jQuery(function () {
+    jQuery('.on-off').change(function () {
+      var ele = jQuery(this);
+      jQuery('label', ele.parent()).text(this.checked ? 'on' : 'off');
+
+      if (this.checked) {
+        var url = '<%= project_environment_enable_flag_path(@project.uuid, @environment) %>?flag_id=' + ele.data('flag-id');
+      } else {
+        var url = '<%= project_environment_disable_flag_path(@project.uuid, @environment) %>?flag_id=' + ele.data('flag-id');
+      }
+
+      jQuery.ajax({
+        url: url,
+        type: 'POST',
+        success: function(result) {
+          console.log('Enabling flag');
+        }
+      });
+    })
   });
 </script>
 </div>

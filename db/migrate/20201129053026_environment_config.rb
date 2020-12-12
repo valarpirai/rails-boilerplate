@@ -4,7 +4,7 @@ class EnvironmentConfig < ActiveRecord::Migration[5.2]
       t.bigint      :account_id, null: false
       t.bigint      :environment_id, null: false
       t.bigint      :feature_flag_id, null: false
-      t.json        :config
+      t.json        :configs
       t.boolean     :deleted, default: false
       t.timestamps
     end

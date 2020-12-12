@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_11_29_053026) do
     t.bigint "account_id", null: false
     t.bigint "environment_id", null: false
     t.bigint "feature_flag_id", null: false
-    t.json "config"
+    t.text "configs"
     t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

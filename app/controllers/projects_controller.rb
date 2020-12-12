@@ -33,6 +33,8 @@ class ProjectsController < ApplicationController
 
   def show
     @feature_flags = @project.feature_flags.page params[:page]
+    env_config = EnvironmentConfig.where(environment_id: @environment.id, feature_flag: @feature_flags.map(&:id))
+    @configs = env_config.each_with_object({}) { |conf, obj| obj[conf.feature_flag_id] = conf }
   end
 
   def change_environment
@@ -70,7 +72,6 @@ class ProjectsController < ApplicationController
   def load_environment
     @environments ||= load_object.environments
     @environment ||= @environments.select { |env| env.name == params[:env] }.first || @environments.first
-    session[:env] = @environment.id
   end
 
   def permit_params

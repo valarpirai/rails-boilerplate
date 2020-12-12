@@ -19,7 +19,10 @@ Rails.application.routes.draw do
       end
     end
     post :change_environment
-    resources :environments, except: [:index, :show, :edit, :update]
+    resources :environments, except: [:index, :show, :edit, :update] do
+      post :enable_flag
+      post :disable_flag
+    end
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -1,6 +1,6 @@
 class EnvironmentsController < ApplicationController
-  before_action :load_object, only: %i[show edit update destroy edit_properties]
-  before_action :load_parent
+  before_action :load_object, except: %i[new]
+  before_action :load_parent, only: [:new]
   before_action :permit_params, only: %i[create]
 
   def new
@@ -15,6 +15,22 @@ class EnvironmentsController < ApplicationController
       flash[:messages] = env.errors.full_messages.to_sentence
       redirect_to_back project_path(@project.uuid)
     end
+  end
+
+  def enable_flag
+    env_config = @environment.environment_configs.where(feature_flag_id: params[:flag_id]).first
+    env_config = @environment.environment_configs.build(feature_flag_id: params[:flag_id]) unless env_config
+
+    env_config.configs[:state] = :on
+    env_config.save
+  end
+
+  def disable_flag
+    env_config = @environment.environment_configs.where(feature_flag_id: params[:flag_id]).first
+    env_config = @environment.environment_configs.build(feature_flag_id: params[:flag_id]) unless env_config
+
+    env_config.configs[:state] = :off
+    env_config.save
   end
 
   def destroy
@@ -32,7 +48,7 @@ class EnvironmentsController < ApplicationController
 
   def load_object
     load_parent
-    @environment ||= @project.environments.find(params[:id]) if params[:id]
+    @environment ||= @project.environments.find(params[:id] || params[:environment_id]) if params[:id] || params[:environment_id]
   end
 
   def permit_params
