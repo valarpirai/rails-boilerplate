@@ -23,6 +23,7 @@ class EnvironmentsController < ApplicationController
 
     env_config.configs[:state] = :on
     env_config.save
+    redirect_to_back project_path(@project.uuid)
   end
 
   def disable_flag
@@ -31,6 +32,7 @@ class EnvironmentsController < ApplicationController
 
     env_config.configs[:state] = :off
     env_config.save
+    redirect_to_back project_path(@project.uuid)
   end
 
   def destroy

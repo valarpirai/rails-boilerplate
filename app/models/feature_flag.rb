@@ -55,7 +55,7 @@ class FeatureFlag < ApplicationRecord
     val = choices[default_choices[mode].to_i]
     if 1 == type
       val.downcase.eql?('true')
-    elsif 2 == type
+    elsif 3 == type
       val.to_i
     else
       val
