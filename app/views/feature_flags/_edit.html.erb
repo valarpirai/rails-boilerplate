@@ -41,7 +41,7 @@ You cannot use new as a key.</small>
       <div class="input-group-prepend">
         <label class="input-group-text" for="on-select">On</label>
       </div>
-      <select class="custom-select" name="on-select">
+      <select class="custom-select on-select" name="on-select">
         <option value="0">Variation 1</option>
         <option value="1">Variation 2</option>
       </select>
@@ -51,9 +51,9 @@ You cannot use new as a key.</small>
       <div class="input-group-prepend">
         <label class="input-group-text" for="off-select">Off</label>
       </div>
-      <select class="custom-select" name="off-select">
+      <select class="custom-select off-select" name="off-select">
         <option value="0">Variation 1</option>
-        <option value="1" selected>Variation 2</option>
+        <option value="1">Variation 2</option>
       </select>
     </div>
   </div>
@@ -67,7 +67,10 @@ jQuery(function () {
   jQuery('.feature-flag-form #feature_flag_name').keyup(function(e) {
     key = this.value.replace(/[^a-z0-9\-_]/gi, '_').replace(/[_]+/g, '_')
     feature_key.val(key);
-  })
+  });
+
+  $(".on-select").val("<%= @feature_flag.default_choices['on'] %>");
+  $(".off-select").val("<%= @feature_flag.default_choices['off'] %>");
 
   jQuery('#add_variation').click(function () {
     // jQuery('.variation-form')

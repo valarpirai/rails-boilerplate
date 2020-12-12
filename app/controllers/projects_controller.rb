@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :permit_params, only: %i[create update]
-  before_action :permit_env_params, only: %i[create_environment]
   before_action :load_object, except: %i[index new create]
   before_action :load_environment, only: %i[show]
 
@@ -36,31 +35,12 @@ class ProjectsController < ApplicationController
     @feature_flags = @project.feature_flags.page params[:page]
   end
 
-  def new_environment
-    render partial: 'new_environment'
-  end
-
-  def create_environment
-    env = @project.environments.new(params[:environment])
-    if env.save
-      redirect_to_back project_path(@project.uuid)
-    else
-      flash[:messages] = env.errors.full_messages.to_sentence
-      redirect_to_back project_path(@project.uuid)
-    end
-  end
-
   def change_environment
     if @project.environments.where(name: params[:env]).exists?
       redirect_to project_path(@project.uuid, env: params[:env])
     else
       render :nothing => true, :status => :bad_request
     end
-  end
-
-  def destroy_environment
-    @project.environments.find_by(name: params[:env]).destroy
-    redirect_to project_path(@project.uuid)
   end
 
   def edit
@@ -82,7 +62,7 @@ class ProjectsController < ApplicationController
   private
 
   def load_object
-    @project ||= current_account.projects.find_by(uuid: params[:id]) if params[:id]
+    @project ||= current_account.projects.find_by(uuid: (params[:id] || params[:project_id])) if params[:id] || params[:project_id]
     raise ActiveRecord::RecordNotFound unless @project
     @project
   end
@@ -96,9 +76,5 @@ class ProjectsController < ApplicationController
   def permit_params
     # params.require(:project).permit(project: %i[name description])
     params.require(:project).permit! #(:project, :name, :description)
-  end
-
-  def permit_env_params
-    params.require(:environment).permit!
   end
 end

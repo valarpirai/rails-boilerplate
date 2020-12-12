@@ -57,14 +57,14 @@ class FeatureFlagsController < ApplicationController
   private
 
   def load_parent
-    @parent = current_account.projects.find_by(uuid: params[:project_id])
+    @parent ||= current_account.projects.find_by(uuid: params[:project_id])
     raise ActiveRecord::RecordNotFound unless @parent
     @parent
   end
 
   def load_object
     load_parent
-    @feature_flag = @parent.feature_flags.find(params[:id]) if params[:id]
+    @feature_flag ||= @parent.feature_flags.find(params[:id]) if params[:id]
   end
 
   def permit_params

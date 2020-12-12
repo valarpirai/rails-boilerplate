@@ -1,4 +1,4 @@
-<%= form_with url: create_environment_project_path(@project.uuid), model: @project.environments.new, class: "environment-form" do |f| %>
+<%= form_with url: project_environments_path(@project.uuid), model: @project.environments.new, class: "environment-form" do |f| %>
 <div class="">
     <div class="form-group">
       <label for="name">Name</label>

@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="col-3">
-    <button type="button" class="btn btn-outline-primary" data-modal data-url="<%= new_environment_project_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
-    <%= link_to('Destroy', destroy_environment_project_path(@project.uuid, env: params[:env] ), method: :delete, class: 'btn btn-outline-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
+    <button type="button" class="btn btn-outline-primary" data-modal data-url="<%= new_project_environment_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
+    <%= link_to('Destroy', project_environment_path(@project.uuid, @environment, env: params[:env] ), method: :delete, class: 'btn btn-outline-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
   </div>
   <div class="col-4">
   <div class="card">
@@ -39,7 +39,7 @@
       <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
       <div class="custom-control custom-checkbox float-right">
         <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>">
-        <label class="custom-control-label" for="on-off-<%= feature_flag.name %>">Turn On</label>
+        <label class="custom-control-label" for="on-off-<%= feature_flag.name %>">Off</label>
       </div>
     </div>
   <% end %>
@@ -49,7 +49,7 @@
 
 <script>
   jQuery('#environment-select').on('change', function() {
-    var url = '<%= change_environment_project_path(@project.uuid) %>?env=' + this.selectedOptions[0].text;
+    var url = '<%= project_change_environment_path(@project.uuid) %>?env=' + this.selectedOptions[0].text;
     jQuery.ajax({
     url: url,
     type: 'POST',
