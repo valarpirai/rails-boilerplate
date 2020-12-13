@@ -83,5 +83,11 @@ Rails.application.configure do
   config.middleware.insert_before Rails::Rack::Logger, Middleware::DisableAssetsLogger
 
   config.action_cable.url = "ws://localhost:3001/cable"
-  config.action_cable.allowed_request_origins = [%r{https?://\S+}]
+  config.action_cable.allowed_request_origins = [%r{.*}]
+  config.action_cable.worker_pool_size = 4
+  config.action_cable.log_tags = [
+    -> request { request.env['user_account_id'] || "no-account" },
+    :action_cable,
+    -> request { request.uuid }
+  ]
 end

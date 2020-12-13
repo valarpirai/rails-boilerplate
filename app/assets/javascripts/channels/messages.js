@@ -1,6 +1,6 @@
-App.messages = App.cable.subscriptions.create('ApplicationCable::FeatureFlagsChannel', {  
+App.messages = App.cable.subscriptions.create('ApplicationCable::FeatureFlagsChannel', {
   received: function(data) {
-    $("#messages").removeClass('hidden').append('<span>test</span>')
+    $("#messages").removeClass('hidden');
     return $('#messages').append(this.renderMessage(data));
   },
 
