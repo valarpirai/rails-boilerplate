@@ -27,3 +27,10 @@ rvm --create --ruby-version ruby-2.6.3@boilerplate
 * Deployment instructions
 
 * ...
+
+
+Websocket Basic Auth
+`wscat -c ws://localhost:3001/cable -o http://localhost.myapp-dev.com:3001/ --auth rbx-ae6b7d4949a226e235fa:x`
+
+Subscribe to Channel
+`{"command":"subscribe","identifier":"{\"channel\":\"ApplicationCable::FeatureFlagsChannel\"}"}`
