@@ -64,6 +64,8 @@ gem 'kaminari', '1.2.1'
 
 gem 'rotp', '6.1.0'
 
+gem 'oj'
+
 # gem 'active_presenter', git: 'https://github.com/jorgevaldivia/active_presenter'
 
 group :development, :test do
@@ -91,3 +93,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+gem 'faye-websocket'
+gem 'eventmachine'
+gem 'concurrent-ruby', require: 'concurrent'

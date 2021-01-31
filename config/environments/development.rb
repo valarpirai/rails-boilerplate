@@ -82,8 +82,9 @@ Rails.application.configure do
   require "#{Rails.root}/lib/middleware/disable_assets_logger"
   config.middleware.insert_before Rails::Rack::Logger, Middleware::DisableAssetsLogger
 
-  config.action_cable.url = "ws://localhost:3001/cable"
+  # config.action_cable.url = "ws://localhost:3001/cable"
   config.action_cable.allowed_request_origins = [%r{.*}]
+  config.action_cable.disable_request_forgery_protection = true
   config.action_cable.worker_pool_size = 4
   config.action_cable.log_tags = [
     -> request { request.env['user_account_id'] || "no-account" },
