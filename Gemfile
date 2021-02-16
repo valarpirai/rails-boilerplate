@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -62,11 +62,14 @@ gem 'seed-fu', '~> 2.3'
 # Active Record Pagination
 gem 'kaminari', '1.2.1'
 
+# TOTP Gem
 gem 'rotp', '6.1.0'
 
-gem 'oj'
+# JSON Parser
+gem 'oj', '3.11.0'
 
-# gem 'active_presenter', git: 'https://github.com/jorgevaldivia/active_presenter'
+# Sidekiq background processing
+gem 'sidekiq', '6.0.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
