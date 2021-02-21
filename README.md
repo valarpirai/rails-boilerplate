@@ -11,7 +11,10 @@ application up and running.
     - [Install RVM (Ruby Version Manager)](https://rvm.io/rvm/install)
 
         `rvm install ruby-2.6.6`
+
         `cd rails-boilerplate/`
+
+        `bundle install`
 
     - [Install Redis](https://gist.github.com/tomysmile/1b8a321e7c58499ef9f9441b2faa0aa8)
     - [Install MySQL Server](https://gist.github.com/operatino/392614486ce4421063b9dece4dfe6c21)

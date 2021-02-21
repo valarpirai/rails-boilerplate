@@ -1,0 +1,21 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 6379
+  namespace: "flag_manager"
+
+main: &main
+  development:
+    <<: *defaults
+
+  test:
+    <<: *defaults
+    namespace: "flag_manager_test"
+
+  staging:
+    <<: *defaults
+
+  production:
+    <<: *defaults
+
+rate_limit:
+  <<: *main

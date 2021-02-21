@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# Optimized JSON
+Oj.optimize_rails()
 
 ActiveModel::Errors.class_eval do
   def app_json(_options = nil)
