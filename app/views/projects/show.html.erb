@@ -25,35 +25,43 @@
   </div>
   </div>
 </div>
-<div class="col-6">
-  <span class="h2">Feature Flags</span>
-  <form  class="form-inline mt-3 float-right">
-    <div class="form-group mx-4">
-      <input type="text" class="form-control" id="search_flags" placeholder="Search flags.. TODO">
-    </div>
-    <span class="btn btn-outline-primary" title="Create Feature flag" data-toggle="tooltip" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</span>
-  </form>
-  <div class="list-group mt-4">
-  <% @feature_flags.each do |feature_flag| %>
-    <% flag_conf = @configs[feature_flag.id] ? @configs[feature_flag.id].configs : { state: :off } %>
-    <div class="list-group-item">
-      <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
-      <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</span>
-      <span class="badge badge-primary" data-modal data-title="Edit properties" data-url="<%= edit_properties_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit Properties</span>
-      <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
-      <div class="custom-control custom-checkbox float-right">
-        <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>" data-flag-id=<%= feature_flag.id %> <%= flag_conf[:state].eql?(:on) ? 'checked' : '' %>>
-        <label class="custom-control-label" for="on-off-<%= feature_flag.name %>"><%= flag_conf[:state] %></label>
+<div class="row">
+  <div class="col-6">
+    <span class="h2">Feature Flags</span>
+    <form  class="form-inline mt-3 float-right">
+      <div class="form-group mx-4">
+        <input type="text" class="form-control" id="search_flags" placeholder="Search flags.. TODO">
       </div>
-      <div class="card bg-light mt-2">
-        <div class="card-body">
-        Serving: <%= feature_flag.variation(flag_conf[:state]) %>
+      <span class="btn btn-outline-primary" title="Create Feature flag" data-toggle="tooltip" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</span>
+    </form>
+    <div class="list-group mt-4">
+    <% @feature_flags.each do |feature_flag| %>
+      <% flag_conf = @configs[feature_flag.id] ? @configs[feature_flag.id].configs : { state: :off } %>
+      <div class="list-group-item" data-target="#flag-configs" data-tab data-url="<%= edit_properties_project_feature_flag_path(@project.uuid, @environment) %>">
+        <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(@project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
+        <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(@project.uuid, feature_flag) %>">Edit</span>
+        <%= link_to('Destroy', project_feature_flag_path(@project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
+        <div class="custom-control custom-checkbox float-right">
+          <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>" data-flag-id=<%= feature_flag.id %> <%= flag_conf[:state].eql?(:on) ? 'checked' : '' %>>
+          <label class="custom-control-label" for="on-off-<%= feature_flag.name %>"><%= flag_conf[:state] %></label>
+        </div>
+        <div class="card bg-light mt-2">
+          <div class="card-body">
+          Serving: <%= feature_flag.variation(flag_conf[:state]) %>
+          </div>
         </div>
       </div>
+    <% end %>
     </div>
-  <% end %>
+      <%= paginate @feature_flags %>
   </div>
-    <%= paginate @feature_flags %>
+
+  <div class="col-6 card mt-3">
+    <div class="card-body">
+      <div class="tab-content" id="flag-configs">
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

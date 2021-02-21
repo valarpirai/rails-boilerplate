@@ -39,14 +39,28 @@
 
   jQuery(function() {
     jQuery('[data-modal]').on('click', function(e) {
-      target = jQuery(e.target)
-      $('#commonModal .modal-title').text(target.data('title'))
-      url = target.data('url')
+      target = jQuery(e.target);
+      jQuery('#commonModal .modal-title').text(target.data('title'));
+      url = target.data('url');
       jQuery.ajax({
         url: url,
         success: function(result) {
-          $('#commonModal .modal-body').html(result);
-          $('#commonModal').modal();
+          jQuery('#commonModal .modal-body').html(result);
+          jQuery('#commonModal').modal();
+        }
+      });
+    });
+
+    jQuery('[data-tab]').on('click', function(e) {
+      target = jQuery(e.target);
+      tab_container = jQuery(target.data('target'));
+      url = target.data('url');
+      jQuery('.active', target.parent()).removeClass('active');
+      target.addClass('active');
+      jQuery.ajax({
+        url: url,
+        success: function(result) {
+          tab_container.html(result);
         }
       })
     });

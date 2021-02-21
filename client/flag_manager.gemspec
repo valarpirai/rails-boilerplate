@@ -1,7 +1,7 @@
 require './lib/flag_manager/version'
 
 Gem::Specification.new do |gs|
-  gs.name = 'Flag Manager'
+  gs.name = 'flag_manager'
   gs.version = FlagManager::VERSION
   gs.summary = 'Feature Flag Manager'
 

@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     resources :environments, except: [:index, :show, :edit, :update] do
       post :enable_flag
       post :disable_flag
+      get :show_flag_configs
+      post :update_flag_configs
     end
   end
 
