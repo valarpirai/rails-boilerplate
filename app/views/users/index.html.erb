@@ -1,3 +1,16 @@
-<div>
-Users Page
+<div class="row  mt-4">
+  <div class="col-6">
+    <div class="list-group">
+      <% @users.each do |user| %>
+        <div class="list-group-item" data-target="#user-profile" data-tab data-url="<%= user_path(user) %>">
+          <%= user.name %> -
+          <%= link_to(user.email, user_path(user)) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-6">
+    <div id="user-profile">
+    </div>
+  </div>
 </div>
