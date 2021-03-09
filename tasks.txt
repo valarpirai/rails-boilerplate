@@ -30,3 +30,4 @@ Modify account_id to tenent_id
 
 WebSocket
 Webhook Support
+Server side events
