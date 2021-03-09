@@ -15,6 +15,8 @@ module FlagManager
 
     config.autoload_paths += ["#{config.root}/lib/"]
 
+    config.hosts << "*.myapp-dev.com"
+
     # Active record Mass assignment
     # config.active_record.whitelist_attributes = true
 
