@@ -60,16 +60,18 @@ gem 'request_store', '~> 1.0'
 gem 'seed-fu', '~> 2.3'
 
 # Active Record Pagination
-gem 'kaminari', '1.2.1'
+gem 'kaminari', '~> 1.2.1'
 
 # TOTP Gem
-gem 'rotp', '6.1.0'
+gem 'rotp', '~> 6.1.0'
 
 # JSON Parser
-gem 'oj', '3.11.0'
+gem 'oj', '~> 3.11.0'
 
 # Sidekiq background processing
-gem 'sidekiq', '6.0.2'
+gem 'sidekiq', '~> 6.2'
+
+gem 'httparty', '~> 0.18'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
