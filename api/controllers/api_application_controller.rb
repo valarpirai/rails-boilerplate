@@ -1,4 +1,4 @@
-class ApiApplicationController < ActionController::Base
+class ApiApplicationController < ActionController::API
   # TODO - Restrict only JSON
   
 end
