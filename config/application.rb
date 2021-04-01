@@ -28,7 +28,7 @@ module FlagManager
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.middleware.delete "ActiveRecord::QueryCache"
+    # config.middleware.delete "ActiveRecord::QueryCache"
 
     config.session_store :cookie_store, key: '_myapp_session', httponly: true
   end

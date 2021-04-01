@@ -1,7 +1,7 @@
 <div class="">
-In Pending state.... <br>
+Edit feature enablement <br>
 
-Targeting
+Target Account
 <%= form_with url: update_properties_project_feature_flag_path(@parent.uuid, @feature_flag), model: @feature_flag, class: "feature-flag-form" do |f| %>
   <div class="form-group">
     <label for="name">Target individual users</label>
@@ -12,6 +12,12 @@ Targeting
     <label for="type">Type</label>
     <%= f.text_field :type, class: 'form-control' %>
   </div>
-  <%= f.submit "Save", class: 'btn btn-primary mt-4' %>
+  <div class='row mt-4'>
+    <%= f.submit "Save", class: 'btn btn-primary col-6' %>
+    <%= f.submit "Fully enable", class: 'btn btn-primary col-6' %>
+  </div>  
+  <div class='row mt-4'>
+    <%= f.submit "Disable", class: 'btn btn-danger col' %>
+  </div>
   <% end %>
 </div>
