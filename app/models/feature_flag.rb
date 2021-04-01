@@ -23,6 +23,7 @@ class FeatureFlag < ApplicationRecord
   ].freeze
 
   VARIATION_TYPES_FOR_SELECT = Hash[VARIATION_TYPES.map { |info| [info[2], info[0]] }]
+  VARIATION_TYPES_BY_ID = Hash[VARIATION_TYPES.map { |info| [info[0], info[2]] }]
 
   KEY_REGEX = /^[A-Za-z0-9\-_]*$/
 
@@ -37,6 +38,10 @@ class FeatureFlag < ApplicationRecord
 
   def type
     self.configs[:type].to_i
+  end
+
+  def type_name
+    VARIATION_TYPES_BY_ID[configs[:type].to_i]
   end
 
   def type=(value)
