@@ -49,7 +49,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    if @project.update_attributes(params[:project])
+    if @project.update(params[:project])
       redirect_to projects_path
     else
       # throw error

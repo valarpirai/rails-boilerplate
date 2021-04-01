@@ -7,7 +7,7 @@ class FeatureFlagsController < ApplicationController
 
   def new
     @feature_flag = FeatureFlag.new
-    render partial: 'new'
+    render partial: 'new_edit', local: { action: 'new' }
   end
 
   def create
@@ -22,7 +22,7 @@ class FeatureFlagsController < ApplicationController
   end
 
   def edit
-    render partial: 'edit'
+    render partial: 'new_edit', local: { action: 'edit' }
   end
 
   def show
@@ -30,7 +30,7 @@ class FeatureFlagsController < ApplicationController
   end
 
   def update
-    if @feature_flag.update_attributes(params[:feature_flag])
+    if @feature_flag.update(params[:feature_flag])
       redirect_to_back project_path(@parent.uuid)
     else
       flash[:title] = 'Update Flag error'
@@ -72,7 +72,6 @@ class FeatureFlagsController < ApplicationController
   end
 
   def build_params
-    params[:feature_flag][:type] = params[:type]
     params[:feature_flag][:default_choices] = { on: params['on-select'], off: params['off-select'] }
   end
 end

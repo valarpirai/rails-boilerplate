@@ -1,0 +1,120 @@
+<% new_page = action_name.eql?('new') %>
+<div class="">
+<%= form_with url: (new_page ? project_feature_flags_path : project_feature_flag_path(@parent.uuid, @feature_flag)), model: @feature_flag, class: "feature-flag-form" do |f| %>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <%= f.text_field :name, class: 'form-control' %>
+    <small class="form-text text-muted">A human-friendly name for your feature.</small>
+  </div>
+  <div class="form-group">
+    <label for="key">Key</label>
+    <%= f.text_field :key, class: 'form-control' %>
+    <small class="form-text text-muted">Use this key in your code. Keys must only contain letters, numbers, _ or -.
+You cannot use new as a key.</small>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <label for="type">Variation Type</label>
+    <%= f.select :type, flag_variation_types(@feature_flag.type), {}, { class: 'form-control' }%>
+  </div>
+
+  <div class='variation-container'>
+    <div class="form-group variation-form">
+      <label for="variation">Variation 1</label>
+      <%= f.text_field :choices, class: 'form-control variation-values', value: (new_page ? 'True' : @feature_flag.choices[0]), multiple: true %>
+    </div>
+
+    <div class="form-group">
+      <label for="variation">Variation 2</label>
+      <%= f.text_field :choices, class: 'form-control variation-values', value: (new_page ? 'False' : @feature_flag.choices[1]), multiple: true %>
+    </div>
+  </div>
+
+  <span id="add_variation" class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Add Variation">Add Variation</span>
+
+  <div class="container row">
+    <div class="col-12">Default Variations</div>
+    <div class="input-group col-6">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="on-select">On</label>
+      </div>
+      <% if new_page %>
+        <select class="custom-select on-select" name="on-select"></select>
+      <% else %>
+        <%= select_tag 'on-select', selected_variations(@feature_flag.choices, @feature_flag.default_choices['on']), class: 'custom-select on-select' %>
+      <% end %>
+    </div>
+
+    <div class="input-group col-6">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="off-select">Off</label>
+      </div>
+      <% if new_page %>
+        <select class="custom-select off-select" name="off-select"></select>
+      <% else %>
+        <%= select_tag 'off-select', selected_variations(@feature_flag.choices, @feature_flag.default_choices['off']), class: 'custom-select off-select' %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= f.submit (new_page ? 'Create' : 'Update'), class: 'btn btn-primary mt-4' %>
+<% end %>
+</div>
+
+<script>
+// Copy name value to key fields
+
+var selected_variations = {};
+
+function populate_options() {
+  var valueArray = $('.variation-values').map(function(index, obj) {
+    return '<option value=' + index + '>' + this.value + '</option';
+  }).get();
+  jQuery('select.on-select').html(valueArray).val(selected_variations['on']);
+  jQuery('select.off-select').html(valueArray).val(selected_variations['off']);
+}
+
+jQuery(function () {
+  var feature_key = jQuery('.feature-flag-form #feature_flag_key')
+  jQuery('.feature-flag-form #feature_flag_name').keyup(function(e) {
+    var key = this.value.replace(/[^a-z0-9\-_]/gi, '_').replace(/[_]+/g, '_');
+    feature_key.val(key);
+  });
+
+  populate_options();
+  jQuery('.variation-values').change(function() {
+    populate_options();
+  });
+
+  <% unless new_page %>
+    selected_variations['on'] = '<%= @feature_flag.default_choices['on'] %>';
+    selected_variations['off'] = '<%= @feature_flag.default_choices['off'] %>';
+  <% else %>
+    selected_variations = { 'on': '0', 'off': '1' }
+  <% end %>
+
+  jQuery('select.on-select').val(selected_variations['on']);
+  jQuery('select.off-select').val(selected_variations['off']);
+
+  jQuery('.custom-select').change(function() {
+    var target = jQuery(this);
+    if (target.hasClass('on-select')) {
+      selected_variations['on'] = this.val;
+    } else {
+      selected_variations['off'] = this.val;
+    }
+  });
+
+  jQuery('#add_variation').click(function () {
+    return;
+    var container = jQuery('.variation-container');
+    var form_content = jQuery('.variation-form');
+    container.append(form_content.outerHTML());
+  });
+});
+</script>

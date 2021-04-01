@@ -1,28 +1,31 @@
 <div class="col">
 <h1 class="display-4"><%= @project.name %></h1>
 <div class="row">
-  <div class="mb-3 col-3">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="environment-select">Environment</label>
+  <div class='col-6'>
+    <div class='row'>
+      <div class="mb-3 col-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="environment-select">Environment</label>
+          </div>
+          <select class="custom-select" id="environment-select">
+            <% @environments.each do |env| %>
+              <option value="<%= env.id %>" <%= env.id == @environment.id ? 'selected' : '' %>> <%= "#{env.name}" %></option>
+            <% end %>
+          </select>
+        </div>
       </div>
-      <select class="custom-select" id="environment-select">
-        <% @environments.each do |env| %>
-          <option value="<%= env.id %>" <%= env.id == @environment.id ? 'selected' : '' %>> <%= "#{env.name}" %></option>
-        <% end %>
-      </select>
+      <div class="col-6">
+        <button type="button" class="btn btn-outline-primary" data-modal data-url="<%= new_project_environment_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
+        <%= link_to('Destroy', project_environment_path(@project.uuid, @environment, env: params[:env] ), method: :delete, class: 'btn btn-outline-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
+      </div>
     </div>
   </div>
-  <div class="col-3">
-    <button type="button" class="btn btn-outline-primary" data-modal data-url="<%= new_project_environment_path(@project.uuid) %>" title="Create environment" data-toggle="tooltip">Create</button>
-    <%= link_to('Destroy', project_environment_path(@project.uuid, @environment, env: params[:env] ), method: :delete, class: 'btn btn-outline-danger', title: "Destroy environment", data: { confirm: "Are you sure want to delete?", 'toggle': "tooltip" } ) %>
-  </div>
-  <div class="col-4">
-  <div class="card">
-    <div class="card-body">
-      <span>API Key: <%= @environment.api_key %></span> <span class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Copy to clipboard">Copy</span>
-    </div>
-  </div>
+  <div class="col-6 card">
+    
+      <div class="card-body">
+        <span>API Key: <%= @environment.api_key %></span> <span class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Copy to clipboard">Copy</span>
+      </div>
   </div>
 </div>
 <div class="row">

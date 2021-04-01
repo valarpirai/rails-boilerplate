@@ -12,7 +12,7 @@ class FeatureFlag < ApplicationRecord
   before_update :set_deleted_at, if: :deleted?
 
   default_scope do
-    where(deleted: false)
+    where(deleted: 0)
   end
 
   VARIATION_TYPES = [
