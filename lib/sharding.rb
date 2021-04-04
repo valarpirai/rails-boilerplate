@@ -12,7 +12,7 @@ class Sharding
     end
 
     def run_on_slave(&block)
-      ActiveRecord::Base.on_slave(&block)
+      ActiveRecord::Base.on_replica(&block)
     end
 
     def select_latest_shard(&block)

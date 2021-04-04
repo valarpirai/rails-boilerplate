@@ -51,8 +51,11 @@ Subscribe to Channel
 ### Production
 
 `RAILS_ENV=production rake secret`
+
 `export SECRET_KEY_BASE=generated_key`
 
 `RAILS_ENV=production rake assets:precompile`
+
 `export RAILS_SERVE_STATIC_FILES=true`
+
 `RAILS_ENV=production rails s -u puma`
