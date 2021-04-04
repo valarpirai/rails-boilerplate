@@ -1,4 +1,5 @@
 class Environment < ActiveRecord::Migration[5.2]
+  shard :all
   def change
     create_table :environments do |t|
       t.bigint      :account_id, null: false

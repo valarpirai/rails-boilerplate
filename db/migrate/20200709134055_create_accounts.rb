@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CreateAccounts < ActiveRecord::Migration[5.2]
+  shard :all
+
   def change
     create_table :accounts do |t|
       t.string :uuid, limit: 36, null: false

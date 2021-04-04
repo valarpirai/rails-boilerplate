@@ -1,4 +1,5 @@
 class CreateEmailNotifications < ActiveRecord::Migration[5.2]
+  shard :all
   def change
     create_table :email_notifications do |t|
       t.bigint      :account_id, null: false

@@ -11,6 +11,12 @@ default: &default
   username: root
   password:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  shards:
+    1:
+      host: 127.0.0.1
+      database: flag_manager_shard_1
+      username: root
+      password:
 
 development:
   <<: *default

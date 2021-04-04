@@ -1,4 +1,5 @@
 class AddProjects < ActiveRecord::Migration[5.2]
+  shard :all
   def change
     create_table :projects do |t|
       t.bigint      :account_id, null: false

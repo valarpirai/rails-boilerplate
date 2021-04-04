@@ -1,4 +1,5 @@
 class AddActivity < ActiveRecord::Migration[5.2]
+  shard :all
   def change
     create_table :activities do |t|
       t.bigint      :account_id, null: false

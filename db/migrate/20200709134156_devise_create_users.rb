@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class DeviseCreateUsers < ActiveRecord::Migration[5.2]
+  shard :all
   def change
     create_table :users do |t|
       t.bigint :account_id, null: false

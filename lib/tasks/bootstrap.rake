@@ -11,7 +11,9 @@ namespace :db do
     Rake::Task['db:schema:load'].invoke
 
     ENV["FIXTURE_PATH"] = "db/fixtures"
-    Rake::Task['db:seed_fu'].invoke
+    Sharding.execute_on_all_shards do
+      Rake::Task['db:seed_fu'].invoke
+    end
 
     puts "All done!  You can now login to the test account at the localhost domain with the login #{AppConfig['EMAILS']['admin_email']} and password test1234.\n\n"
   end

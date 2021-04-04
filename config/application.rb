@@ -19,6 +19,7 @@ module FlagManager
     config.autoload_paths += ["#{config.root}/lib/"]
 
     config.hosts << "*.myapp-dev.com"
+    config.hosts << "localhost.myapp-dev.com"
 
     # Active record Mass assignment
     # config.active_record.whitelist_attributes = true
@@ -29,6 +30,12 @@ module FlagManager
     # the framework and any gems in your application.
 
     # config.middleware.delete "ActiveRecord::QueryCache"
+
+    # Load all the Middlewares
+    Dir["#{Rails.root}/lib/middleware/*"].each do |file|
+      require file
+    end
+    config.middleware.use Middleware::ShardSelector
 
     config.session_store :cookie_store, key: '_myapp_session', httponly: true
   end

@@ -1,4 +1,5 @@
-class CreateShardMappings < ActiveRecord::Migration[6.1]
+class CreateShardMappings < ActiveRecord::Migration[6.0]
+  shard :none
   def change
     create_table :shard_mappings do |t|
       t.bigint :account_id, null: false
