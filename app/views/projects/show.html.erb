@@ -63,12 +63,8 @@
     });
   });
 
-  jQuery('#search_flags').submit(function() {
-
-  })
-
   jQuery(function () {
-    jQuery('.on-off').change(function () {
+    jQuery('body').on('change', '.on-off', function () {
       var ele = jQuery(this);
       jQuery('label', ele.parent()).text(this.checked ? 'on' : 'off');
 
@@ -82,7 +78,7 @@
         url: url,
         type: 'POST',
         success: function(result) {
-          console.log('Enabling flag');
+          jQuery('.serving', ele.parent().parent()).html('' + result['data']);
         }
       });
     });

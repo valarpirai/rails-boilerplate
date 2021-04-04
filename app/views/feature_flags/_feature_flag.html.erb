@@ -4,12 +4,12 @@
   <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(project.uuid, feature_flag) %>">Edit</span>
   <%= link_to('Destroy', project_feature_flag_path(project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
   <div class="custom-control custom-checkbox float-right">
-    <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.name %>" data-flag-id=<%= feature_flag.id %> <%= flag_conf[:state].eql?(:on) ? 'checked' : '' %>>
-    <label class="custom-control-label" for="on-off-<%= feature_flag.name %>"><%= flag_conf[:state] %></label>
+    <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.key %>" data-flag-id=<%= feature_flag.id %> <%= flag_conf[:state].eql?(:on) ? 'checked' : '' %>>
+    <label class="custom-control-label" for="on-off-<%= feature_flag.key %>"><%= flag_conf[:state] %></label>
   </div>
   <div class="card bg-light mt-2">
     <div class="card-body">
-      Serving: <%= feature_flag.variation(flag_conf[:state]) %>
+      Serving: <span class='serving'><%= feature_flag.variation(flag_conf[:state]) %></span>
     </div>
   </div>
 </div>

@@ -24,7 +24,10 @@ class EnvironmentsController < ApplicationController
     env_config.configs[:state] = :on
     env_config.save
     ActionCable.server.broadcast "messages_#{@environment.client_id}", data: env_config, flag: env_config.feature_flag.name
-    redirect_to_back project_path(@project.uuid)
+
+    # TODO - return resulting value
+    render json: { data: env_config.feature_flag.variation(env_config.configs[:state]) }
+    # redirect_to_back project_path(@project.uuid)
   end
 
   def disable_flag
@@ -34,7 +37,8 @@ class EnvironmentsController < ApplicationController
     env_config.configs[:state] = :off
     env_config.save
     ActionCable.server.broadcast "messages_#{@environment.client_id}", data: env_config, flag: env_config.feature_flag.name
-    redirect_to_back project_path(@project.uuid)
+    # redirect_to_back project_path(@project.uuid)
+    render json: { data: env_config.feature_flag.variation(env_config.configs[:state]) }
   end
 
   def destroy

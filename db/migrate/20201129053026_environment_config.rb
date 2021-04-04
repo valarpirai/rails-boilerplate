@@ -1,4 +1,4 @@
-class EnvironmentConfig < ActiveRecord::Migration[5.2]
+class EnvironmentConfig < ActiveRecord::Migration[6.1]
   def change
     create_table :environment_configs do |t|
       t.bigint      :account_id, null: false
