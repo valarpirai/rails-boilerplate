@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get '/login/normal' => 'users/sessions#new', as: :login_normal, constraints: lambda {|req| req.format == :html }
 
   resources :projects do
+    member do
+      post :search_flags
+    end
     resources :feature_flags, except: [:index] do
       member do
         get :edit_properties

@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :permit_params, only: %i[create update]
   before_action :load_object, except: %i[index new create]
-  before_action :load_environment, only: %i[show]
+  before_action :load_environment, only: %i[show search_flags]
 
   def index
     @projects = Project.includes([:feature_flags, :environments]).page params[:page]
@@ -45,6 +45,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def search_flags
+    sanitize_params
+    @feature_flags = @project.feature_flags.where('name LIKE ?', "#{params[:query]}%")
+    env_config = EnvironmentConfig.where(environment_id: @environment.id, feature_flag: @feature_flags.map(&:id))
+    @configs = env_config.each_with_object({}) { |conf, obj| obj[conf.feature_flag_id] = conf }
+    render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project }
+  end
+
   def edit
   end
 
@@ -64,7 +72,8 @@ class ProjectsController < ApplicationController
   private
 
   def load_object
-    @project ||= current_account.projects.find_by(uuid: (params[:id] || params[:project_id])) if params[:id] || params[:project_id]
+    return @project if @project.present?
+    @project = current_account.projects.find_by(uuid: (params[:id] || params[:project_id])) if params[:id] || params[:project_id]
     raise ActiveRecord::RecordNotFound unless @project
     @project
   end
@@ -77,5 +86,8 @@ class ProjectsController < ApplicationController
   def permit_params
     # params.require(:project).permit(project: %i[name description])
     params.require(:project).permit! #(:project, :name, :description)
+  end
+
+  def sanitize_params
   end
 end

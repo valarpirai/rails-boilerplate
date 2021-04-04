@@ -64,5 +64,22 @@
         }
       })
     });
+
+    jQuery('[data-pjax-form]').on('submit', function(e) {
+      e.preventDefault();
+      var form = jQuery(e.target);
+      var result_container = jQuery(form.data('target'));
+      var url = form.data('url');
+      var method = form.data('method') || 'get';
+      form.addClass('active');
+      jQuery.ajax({
+        url: url,
+        type: method,
+        data: form.serialize(),
+        success: function(result) {
+          result_container.html(result);
+        }
+      });
+    });
   });
 </script>

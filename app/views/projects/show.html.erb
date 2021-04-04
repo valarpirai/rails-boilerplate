@@ -31,14 +31,14 @@
 <div class="row">
   <div class="col-6">
     <span class="h2">Feature Flags</span>
-    <form class="form-inline mt-3 float-right">
+    <form class="form-inline mt-3 float-right" data-method="post" data-target="#flag-list" data-pjax-form data-url="<%= search_flags_project_path(@project.uuid, env: @environment.name) %>">
       <div class="form-group mx-4">
-        <input type="text" class="form-control" id="search_flags" placeholder="Search flags.. TODO">
+        <input type="text" class="form-control" name="query" placeholder="Search flags..">
       </div>
       <span class="btn btn-outline-primary" title="Create Feature flag" data-toggle="tooltip" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</span>
     </form>
-    <div class="list-group mt-4">
-      <%= render partial: 'feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project } %>
+    <div id='flag-list' class="list-group mt-4">
+      <%= render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project } %>
     </div>
     <%= paginate @feature_flags %>
   </div>
@@ -63,6 +63,10 @@
     });
   });
 
+  jQuery('#search_flags').submit(function() {
+
+  })
+
   jQuery(function () {
     jQuery('.on-off').change(function () {
       var ele = jQuery(this);
@@ -81,7 +85,7 @@
           console.log('Enabling flag');
         }
       });
-    })
+    });
   });
 </script>
 </div>
