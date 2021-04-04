@@ -8,10 +8,19 @@ module ApplicationCable
     end
 
     private
+      def host
+        @host ||= Rails.env.development? ? env["HTTP_HOST"].split(':')[0] : env["HTTP_HOST"]
+      end
+
       def find_verified_env
         # TODO - Verify Account domain and API key
         api_key_split = decode_auth_credentials
-        if api_key_split.present? && verified_env = Environment.find_by(api_key: api_key_split[0])
+        verified_env = false
+        Sharding.select_shard_of(host) do
+          verified_env = Environment.find_by(api_key: api_key_split[0])
+        end
+
+        if api_key_split.present? && verified_env
           return verified_env
         end
         reject_unauthorized_connection

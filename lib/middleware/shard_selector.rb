@@ -8,18 +8,12 @@ module Middleware
 
     def call(env)
       @host = Rails.env.development? ? env["HTTP_HOST"].split(':')[0] : env["HTTP_HOST"]
-      env['SHARD'] = fetch_shard(@host)
-
-      ApplicationRecord.on_shard(env['SHARD'].id) do
+      Sharding.select_shard_of(@host) do
         @app.call(env)
       end
     rescue ActiveRecord::RecordNotFound => e
       # return 404 error
       @status, @headers, @response = [404, RESPONSE_HEADERS, [e.message]]
-    end
-
-    def fetch_shard(domain)
-      ShardMapping.lookup(domain)
     end
   end
 end

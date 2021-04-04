@@ -4,7 +4,7 @@ class Sharding
       shard = ShardMapping.lookup(shard_key)
       check_shard_status(shard)
       shard_name = shard.shard_name 
-      ActiveRecord::Base.on_shard(shard_name.to_sym,&block)
+      ActiveRecord::Base.on_shard(shard_name.to_sym, &block)
     end
 
     def run_on_master(&block)
@@ -16,11 +16,11 @@ class Sharding
     end
 
     def select_latest_shard(&block)
-      ActiveRecord::Base.on_shard(ShardMapping.latest_shard,&block)
+      ActiveRecord::Base.on_shard(ShardMapping.latest_shard, &block)
     end
 
-    def run_on_shard(shard_name,&block)
-      ActiveRecord::Base.on_shard(shard_name.to_sym,&block)
+    def run_on_shard(shard_name, &block)
+      ActiveRecord::Base.on_shard(shard_name.to_sym, &block)
     end
 
     def all_shards
