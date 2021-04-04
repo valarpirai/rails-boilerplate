@@ -1,5 +1,5 @@
 app_name: Flag Manager
-latest_shard: shard_1
+latest_shard: 1
 
 # Used in account creation 
 base_domain:

@@ -11,7 +11,11 @@ class ShardMapping < ApplicationRecord
 
   class << self
     def lookup(shard_key)
-      is_numeric?(shard_key) ? find_by(account_id: shard_key) : find_by(domain: shard_key)
+      is_numeric?(shard_key) ? find_by(account_id: shard_key) : fetch_by_domain(shard_key)
+    end
+
+    def fetch_by_domain(domain)
+      find_by(account_id: DomainMapping.find_by(domain: domain).account_id)
     end
 
     private

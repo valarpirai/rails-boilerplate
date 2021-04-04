@@ -7,8 +7,8 @@ module Middleware
     end
 
     def call(env)
-      domain_mapping = lookup_account(env)
-      fetch_shard(domain_mapping)
+      @host = Rails.env.development? ? env["HTTP_HOST"].split(':')[0] : env["HTTP_HOST"]
+      env['SHARD'] = fetch_shard(@host)
 
       ApplicationRecord.on_shard(env['SHARD'].id) do
         @app.call(env)
@@ -18,13 +18,8 @@ module Middleware
       @status, @headers, @response = [404, RESPONSE_HEADERS, [e.message]]
     end
 
-    def fetch_shard
-      env['SHARD'] ||= ShardMapping.lookup_with_domain(domain_mapping.domain)
-    end
-
-    def lookup_account(env)
-      # Account Lookup
-      DomainMapping.find_by(domain: env['host'])
+    def fetch_shard(domain)
+      ShardMapping.lookup(domain)
     end
   end
 end
