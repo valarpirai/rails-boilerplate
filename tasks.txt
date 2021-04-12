@@ -13,7 +13,7 @@ Mailer
 Rate limiting - API, BG Workers, Etc.
 Roles and Permissions
 
-Sharding at table level
+Sharding at table level - Done
 
 Export and Import - Configuration data and User data
 Controller param Validation
@@ -23,6 +23,7 @@ Wrappers for Gems
 User login redirect error
 TOTP - feature
 Authorization
+Privilege check - Controller action, Object level
 
 Tags
 Search Keys

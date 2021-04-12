@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AccountsController < ApplicationController
+  around_action :select_latest_shard, only: [:signup]
   before_action :validate_params
   before_action :build_signup_params, :set_additional_signup_params, only: [:signup]
   def new; end

@@ -42,4 +42,8 @@ module Concerns::ApplicationConcern
       redirect_to default
     end
   end
+
+  def select_latest_shard(&block)
+    Sharding.select_latest_shard(&block)
+  end
 end

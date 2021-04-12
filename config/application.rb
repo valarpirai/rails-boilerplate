@@ -35,6 +35,7 @@ module FlagManager
     Dir["#{Rails.root}/lib/middleware/*"].each do |file|
       require file
     end
+    config.middleware.use Middleware::RouteChecker
     config.middleware.use Middleware::ShardSelector
 
     config.session_store :cookie_store, key: '_myapp_session', httponly: true

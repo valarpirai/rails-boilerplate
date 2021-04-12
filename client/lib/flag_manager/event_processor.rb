@@ -1,3 +1,4 @@
+# Process all the flag related events and store them
 module FlagManager
   class EventProcessor
 

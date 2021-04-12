@@ -12,6 +12,14 @@ Target Account
     <label for="type">Type : </label>
     <span><%= @feature_flag.type_name %></span>
   </div>
+  <div class="form-group">
+    <label for="type">Percentage of accounts : </label>
+    <%= f.text_field :percentage_of_account, type: 'number',  class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label for="type">List of accounts : </label>
+    <%= f.text_area :accounts, class: 'form-control' %>
+  </div>
   <div class='row mt-4'>
     <%= f.submit "Save", class: 'btn btn-primary col-6' %>
     <%= f.submit "Fully enable", class: 'btn btn-primary col-6' %>

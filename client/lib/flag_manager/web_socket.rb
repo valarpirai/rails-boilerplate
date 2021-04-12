@@ -11,7 +11,7 @@ require 'eventmachine'
 module FlagManager
   class WebSocket
 
-    RETRY_TIME_WAIT = 10
+    RETRY_TIME_WAIT = 2
 
     def initialize(url, api_key, event_processor, reconnect = true)
       @url = url
@@ -67,12 +67,12 @@ module FlagManager
     end
 
     def reconnect
-      return unless @disconnected.true?
+      return unless @disconnected.true? && @reconnect
+      p 're-start worker'
       sleep RETRY_TIME_WAIT
       if @worker && @worker.alive? && @worker != Thread.current
         Thread.kill(@worker)
       end
-      p 're-start worker'
       connect
     end
 

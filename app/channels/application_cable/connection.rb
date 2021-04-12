@@ -13,9 +13,9 @@ module ApplicationCable
       end
 
       def find_verified_env
-        # TODO - Verify Account domain and API key
         api_key_split = decode_auth_credentials
         verified_env = false
+        # Verify Account domain and API key
         Sharding.select_shard_of(host) do
           verified_env = Environment.find_by(api_key: api_key_split[0])
         end
@@ -28,17 +28,9 @@ module ApplicationCable
 
       def decode_auth_credentials
         http_auth_header = request.headers['HTTP_AUTHORIZATION'] || request.params['token']
-        # puts request.headers.env.reject { |key| key.to_s.include?('.') }.inspect
-        puts 'http_auth_header'
-        puts http_auth_header.inspect
         basic_auth_match = http_auth_header.present? ? /Basic (.*)/.match(http_auth_header) : nil
-        if basic_auth_match.blank? || basic_auth_match.length <= 1
-          api_key_with_x = Base64.decode64(http_auth_header)
-          return api_key_with_x.split(":")
-        else
-          api_key_with_x = Base64.decode64(basic_auth_match[1])
-          return api_key_with_x.split(":")
-        end
+        api_key_with_x = Base64.decode64((basic_auth_match.blank? || basic_auth_match.length <= 1) ? http_auth_header : basic_auth_match[1])
+        return api_key_with_x.split(":")
      end
   end
 end
