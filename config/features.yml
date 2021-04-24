@@ -1,0 +1,6 @@
+features:
+  account:
+    login_recaptcha: 1
+
+  user:
+    totp: 1

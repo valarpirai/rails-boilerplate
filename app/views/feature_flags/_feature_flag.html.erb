@@ -1,9 +1,9 @@
 <% flag_conf = configs[feature_flag.id] ? configs[feature_flag.id].configs : { state: :off } %>
-<div class="list-group-item" data-target="#flag-configs" data-tab data-url="<%= edit_properties_project_feature_flag_path(project.uuid, feature_flag) %>">
+<div class="list-group-item" data-target="#flag-configs" data-tab data-url="<%= edit_properties_project_feature_flag_path(project.uuid, feature_flag, {environment_id: environment_id}) %>">
   <span data-modal data-title="Flag" data-url="<%= project_feature_flag_path(project.uuid, feature_flag) %>"> <%= feature_flag.name %></span>
   <span class="badge badge-secondary" data-modal data-title="Edit Flag" data-url="<%= edit_project_feature_flag_path(project.uuid, feature_flag) %>">Edit</span>
   <%= link_to('Destroy', project_feature_flag_path(project.uuid, feature_flag), method: :delete, class: 'badge badge-danger', title: "Destroy Feature flag", data: { confirm: "Are you sure want to delete?", toggle: "tooltip" } ) %>
-  <div class="custom-control custom-checkbox float-right">
+  <div class="custom-control custom-checkbox float-right hide">
     <input type="checkbox" class="custom-control-input on-off" id="on-off-<%= feature_flag.key %>" data-flag-id=<%= feature_flag.id %> <%= flag_conf[:state].eql?(:on) ? 'checked' : '' %>>
     <label class="custom-control-label" for="on-off-<%= feature_flag.key %>"><%= flag_conf[:state] %></label>
   </div>

@@ -12,6 +12,7 @@ Sidekiq Worker
 Mailer
 Rate limiting - API, BG Workers, Etc.
 Roles and Permissions
+- Add features column to Account and User
 
 Sharding at table level - Done
 

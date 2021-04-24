@@ -39,7 +39,7 @@
       <span class="btn btn-outline-primary" title="Create Feature flag" data-toggle="tooltip" data-url="<%= new_project_feature_flag_path(@project.uuid) %>" data-modal data-title="Create Flag">Create Flag</span>
     </form>
     <div id='flag-list' class="list-group mt-4">
-      <%= render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project } %>
+      <%= render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project, environment_id: @environment.id } %>
     </div>
     <%= paginate @feature_flags %>
   </div>
@@ -96,6 +96,7 @@
   });
 
   jQuery(function () {
+    # Unused
     jQuery('body').on('change', '.on-off', function () {
       var ele = jQuery(this);
       jQuery('label', ele.parent()).text(this.checked ? 'on' : 'off');

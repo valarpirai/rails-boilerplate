@@ -3,6 +3,7 @@ class FeatureFlagsController < ApplicationController
   before_action :load_object, only: %i[show edit update destroy edit_properties]
   before_action :load_parent, only: %i[create]
   before_action :build_params, :permit_params, only: %i[create update]
+  before_action :load_environment, only: %i[:edit_properties, :update_properties]
 
   def new
     @feature_flag = FeatureFlag.new
@@ -29,6 +30,7 @@ class FeatureFlagsController < ApplicationController
   end
 
   def update
+    params[:feature_flag].delete(:key)
     if @feature_flag.update(params[:feature_flag])
       redirect_to_back project_path(@parent.uuid)
     else
@@ -39,11 +41,11 @@ class FeatureFlagsController < ApplicationController
   end
   
   def edit_properties
-    render partial: 'edit_properties'
+    render partial: 'edit_properties', locals: { environment_id: params[:environment_id] }
   end
 
   def update_properties
-    # Update Flag properties
+    # Update feature enablement properties
   end
 
   def destroy
@@ -64,6 +66,10 @@ class FeatureFlagsController < ApplicationController
   def load_object
     load_parent
     @feature_flag ||= @parent.feature_flags.find(params[:id]) if params[:id]
+  end
+
+  def load_environment
+    @environment ||= @parent.environments.find(params[:environment_id]) if params[:environment_id]
   end
 
   def permit_params

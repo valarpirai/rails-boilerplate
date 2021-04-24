@@ -21,11 +21,11 @@ class EnvironmentsController < ApplicationController
     env_config = @environment.environment_configs.where(feature_flag_id: params[:flag_id]).first
     env_config = @environment.environment_configs.build(feature_flag_id: params[:flag_id]) unless env_config
 
-    env_config.configs[:state] = :on
+    env_config.configs[:state] = EnvironmentConfig::STATE_BY_KEY[:on]
     env_config.save
     ActionCable.server.broadcast "messages_#{@environment.client_id}", data: env_config, flag: env_config.feature_flag.name
 
-    # TODO - return resulting value
+    # return resulting value
     render json: { data: env_config.feature_flag.variation(env_config.configs[:state]) }
     # redirect_to_back project_path(@project.uuid)
   end
@@ -34,7 +34,7 @@ class EnvironmentsController < ApplicationController
     env_config = @environment.environment_configs.where(feature_flag_id: params[:flag_id]).first
     env_config = @environment.environment_configs.build(feature_flag_id: params[:flag_id]) unless env_config
 
-    env_config.configs[:state] = :off
+    env_config.configs[:state] = EnvironmentConfig::STATE_BY_KEY[:off]
     env_config.save
     ActionCable.server.broadcast "messages_#{@environment.client_id}", data: env_config, flag: env_config.feature_flag.name
     # redirect_to_back project_path(@project.uuid)

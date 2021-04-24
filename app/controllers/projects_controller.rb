@@ -50,7 +50,7 @@ class ProjectsController < ApplicationController
     @feature_flags = @project.feature_flags.where('name LIKE ?', "#{params[:query]}%")
     env_config = EnvironmentConfig.where(environment_id: @environment.id, feature_flag: @feature_flags.map(&:id))
     @configs = env_config.each_with_object({}) { |conf, obj| obj[conf.feature_flag_id] = conf }
-    render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project }
+    render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project, environment_id: @environment.id }
   end
 
   def edit
