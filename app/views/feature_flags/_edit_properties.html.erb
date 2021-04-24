@@ -6,6 +6,9 @@
 <div class="form-group">
   <span>Choices : <%= @feature_flag.choices.join(', ') %></span>
 </div>
+<div class="form-group">
+  <span>Status : <span class="h4 badge badge-secondary"><%= env_config[:state] %></span></span>
+</div>
 <%= form_with url: update_properties_project_feature_flag_path(@parent.uuid, @feature_flag, {environment_id: environment_id}), model: @feature_flag, method: 'post', class: "feature-flag-form#{@feature_flag.key}" do |f| %>
   <div class="form-group hide">
     <label for="name">Target individual users</label>

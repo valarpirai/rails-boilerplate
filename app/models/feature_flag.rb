@@ -18,12 +18,13 @@ class FeatureFlag < ApplicationRecord
   VARIATION_TYPES = [
     [1, :boolean, "Boolean"],
     [2, :string, "String"],
-    [3, :Number, "Number"],
-    [4, :JSON, "JSON"],
+    [3, :number, "Number"],
+    [4, :json, "JSON"],
   ].freeze
 
   VARIATION_TYPES_FOR_SELECT = Hash[VARIATION_TYPES.map { |info| [info[2], info[0]] }]
   VARIATION_TYPES_BY_ID = Hash[VARIATION_TYPES.map { |info| [info[0], info[2]] }]
+  VARIATION_TYPES_BY_KEY = Hash[VARIATION_TYPES.map { |info| [info[1], info[0]] }]
 
   KEY_REGEX = /^[A-Za-z0-9\-_]*$/
 
@@ -58,10 +59,12 @@ class FeatureFlag < ApplicationRecord
 
   def variation(mode = :on)
     val = choices[default_choices[mode].to_i]
-    if 1 == type
+    if VARIATION_TYPES_BY_KEY[:boolean] == type
       val.downcase.eql?('true')
-    elsif 3 == type
+    elsif VARIATION_TYPES_BY_KEY[:number] == type
       val.to_i
+    elsif VARIATION_TYPES_BY_KEY[:json] == type
+      JSON.parse(val)
     else
       val
     end

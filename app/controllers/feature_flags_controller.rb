@@ -3,7 +3,7 @@ class FeatureFlagsController < ApplicationController
   before_action :load_object, only: %i[show edit update destroy edit_properties]
   before_action :load_parent, only: %i[create]
   before_action :build_params, :permit_params, only: %i[create update]
-  before_action :load_environment, only: %i[:edit_properties, :update_properties]
+  before_action :load_environment, only: %i[edit_properties update_properties]
 
   def new
     @feature_flag = FeatureFlag.new
@@ -41,7 +41,9 @@ class FeatureFlagsController < ApplicationController
   end
   
   def edit_properties
-    render partial: 'edit_properties', locals: { environment_id: params[:environment_id] }
+    env_config = @environment.environment_configs.where(feature_flag_id: params[:id]).first
+    env_config = env_config.present? ? env_config.configs : { state: :off }
+    render partial: 'edit_properties', locals: { environment_id: params[:environment_id], env_config: env_config }
   end
 
   def update_properties
