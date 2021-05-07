@@ -1,6 +1,6 @@
 class FeatureFlagsController < ApplicationController
 
-  before_action :load_object, only: %i[show edit update destroy edit_properties]
+  before_action :load_object, only: %i[show edit update destroy edit_properties update_properties]
   before_action :load_parent, only: %i[create]
   before_action :build_params, :permit_params, only: %i[create update]
   before_action :load_environment, only: %i[edit_properties update_properties]

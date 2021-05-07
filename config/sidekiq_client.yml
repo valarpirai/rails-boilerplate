@@ -1,0 +1,22 @@
+defaults: &defaults
+  :verbose: true
+  :require: ./config/environment.rb
+  :concurrency: 5
+  :logfile: ./log/sidekiq.log
+  :timeout: 30
+  :balanced_queues:
+    - deliver_emails
+  :queues:
+    - [deliver_emails]
+   
+development:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+test:
+  <<: *defaults
