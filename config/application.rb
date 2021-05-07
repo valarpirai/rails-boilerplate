@@ -12,7 +12,6 @@ Bundler.require(*Rails.groups)
 module FlagManager
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
 
     config.time_zone = 'Chennai'
 
@@ -32,11 +31,11 @@ module FlagManager
     # config.middleware.delete "ActiveRecord::QueryCache"
 
     # Load all the Middlewares
-    Dir["#{Rails.root}/lib/middleware/*"].each do |file|
-      require file
+    Dir["#{Rails.root}/lib/middleware/**/*"].each do |file|
+      require file if file.end_with?('.rb')
     end
-    config.middleware.use Middleware::RouteChecker
-    config.middleware.use Middleware::ShardSelector
+    config.middleware.use ::Middleware::RouteChecker
+    config.middleware.use ::Middleware::ShardSelector
 
     config.session_store :cookie_store, key: '_myapp_session', httponly: true
   end

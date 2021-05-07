@@ -1,4 +1,5 @@
-def config_file(file_name)
+def config_file(file_name, env = false)
+    return YAML.load_file(File.join(Rails.root, 'config', file_name))[Rails.env] if env
     YAML.load_file(File.join(Rails.root, 'config', file_name))
 end
 

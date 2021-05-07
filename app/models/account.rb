@@ -22,6 +22,8 @@ class Account < ApplicationRecord
       RequestStore[:account] = nil
     end
 
+    alias_method :reset_current_account, :reset_current
+
     def fetch_by_full_domain(full_domain)
       return if full_domain.blank?
       find_by(full_domain: full_domain)

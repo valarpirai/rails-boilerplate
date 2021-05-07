@@ -1,0 +1,21 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 6379
+  dead_max_jobs: 10000
+  namespace: sidekiqbj
+
+development:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+slave:
+  <<: *defaults
+
+test:
+  <<: *defaults
+  namespace: test
+
+production:
+  <<: *defaults
