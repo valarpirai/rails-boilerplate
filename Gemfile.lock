@@ -161,7 +161,7 @@ GEM
     msgpack (1.4.2)
     multi_xml (0.6.0)
     mysql2 (0.5.3)
-    nio4r (2.5.7)
+    nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
@@ -173,7 +173,7 @@ GEM
     orm_adapter (0.5.0)
     popper_js (1.16.0)
     public_suffix (4.0.6)
-    puma (4.3.8)
+    puma (5.6.2)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -313,7 +313,7 @@ DEPENDENCIES
   mysql2 (~> 0.5.3)
   oj (~> 3.11.0)
   omniauth
-  puma (~> 4.3)
+  puma (~> 5.6)
   rack-attack
   rails (~> 6.0.0)
   redis (~> 4.0)
