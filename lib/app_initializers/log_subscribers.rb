@@ -22,11 +22,11 @@ module ActiveRecord
         }.inspect
       end
 
-    #   if Rails.env.development?
+      if Rails.env.development?
         l_c = odd? ? CYAN : MAGENTA
         name = color(name, l_c, true)
         sql  = color(sql, l_c, true)
-    #   end
+      end
 
       info "  #{name}  #{sql}#{binds}"
     end

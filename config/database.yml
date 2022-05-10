@@ -14,7 +14,7 @@ default: &default
   shards:
     1:
       host: 127.0.0.1
-      database: flag_manager_shard_1
+      database: flag_manager
       username: root
       password:
 
