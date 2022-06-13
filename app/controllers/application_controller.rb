@@ -15,4 +15,9 @@ class ApplicationController < ActionController::Base
   # rescue_from(ActionController::UnpermittedParameters) do |pme|
   #   render json: { error: { unknown_parameters: pme.params } }, status: :bad_request
   # end
+
+
+  def ws_broadcast(client_id, env_config)
+    ActionCable.server.broadcast "messages_#{client_id}", data: env_config, flag: env_config.feature_flag.name
+  end
 end

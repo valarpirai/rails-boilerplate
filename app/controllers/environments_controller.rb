@@ -23,7 +23,7 @@ class EnvironmentsController < ApplicationController
 
     env_config.configs[:state] = EnvironmentConfig::STATE_BY_KEY[:on]
     env_config.save
-    ActionCable.server.broadcast "messages_#{@environment.client_id}", data: env_config, flag: env_config.feature_flag.name
+    ws_broadcast(@environment.client_id, env_config)
 
     # return resulting value
     render json: { data: env_config.feature_flag.variation(env_config.configs[:state]) }
@@ -36,7 +36,7 @@ class EnvironmentsController < ApplicationController
 
     env_config.configs[:state] = EnvironmentConfig::STATE_BY_KEY[:off]
     env_config.save
-    ActionCable.server.broadcast "messages_#{@environment.client_id}", data: env_config, flag: env_config.feature_flag.name
+    ws_broadcast(@environment.client_id, env_config)
     # redirect_to_back project_path(@project.uuid)
     render json: { data: env_config.feature_flag.variation(env_config.configs[:state]) }
   end

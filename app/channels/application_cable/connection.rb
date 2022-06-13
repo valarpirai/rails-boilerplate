@@ -13,14 +13,14 @@ module ApplicationCable
       end
 
       def find_verified_env
-        api_key_split = decode_auth_credentials
+        api_key = decode_auth_credentials
         verified_env = false
         # Verify Account domain and API key
         Sharding.select_shard_of(host) do
-          verified_env = Environment.find_by(api_key: api_key_split[0])
+          verified_env = Environment.find_by(api_key: api_key)
         end
 
-        if api_key_split.present? && verified_env
+        if api_key.present? && verified_env
           return verified_env
         end
         reject_unauthorized_connection
@@ -30,7 +30,7 @@ module ApplicationCable
         http_auth_header = request.headers['HTTP_AUTHORIZATION'] || request.params['token']
         basic_auth_match = http_auth_header.present? ? /Basic (.*)/.match(http_auth_header) : nil
         api_key_with_x = Base64.decode64((basic_auth_match.blank? || basic_auth_match.length <= 1) ? http_auth_header : basic_auth_match[1])
-        return api_key_with_x.split(":")
+        return api_key_with_x.split(":")[0]
      end
   end
 end

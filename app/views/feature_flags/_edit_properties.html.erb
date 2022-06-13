@@ -46,7 +46,7 @@
     var target_btn = jQuery(e.target);
     var form = jQuery('<%= ".feature-flag-form#{@feature_flag.key}" %>');
     var payload = form.serialize();
-    payload += '&' + target_btn.data('action') + "=true";
+    payload += "&feature_action=" + target_btn.data('action');
 
     fetch(form.attr('action'), {
       method: 'post',

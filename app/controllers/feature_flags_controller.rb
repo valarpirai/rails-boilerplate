@@ -47,7 +47,12 @@ class FeatureFlagsController < ApplicationController
   end
 
   def update_properties
-    # Update feature enablement properties
+    env_config = @environment.environment_configs.where(feature_flag_id: params[:id]).first_or_create
+    env_config[:configs] ||= {}
+    env_config[:configs][:state] = params[:feature_action].eql?('enable') ? :on : :off
+    env_config.save
+    ws_broadcast(@environment.client_id, env_config)
+    head :no_content
   end
 
   def destroy

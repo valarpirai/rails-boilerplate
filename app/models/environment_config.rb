@@ -12,4 +12,16 @@ class EnvironmentConfig < ApplicationRecord
 
   serialize :configs, Hash
 
+  before_validation :set_parent_ids
+
+  # validates :config_data
+
+
+  def config_data
+  end
+
+  def set_parent_ids
+    self.feature_flag_id ||= feature_flag.id if feature_flag_id.nil? && !feature_flag.nil?
+    self.environment_id ||= environment.id if environment_id.nil? && !environment.nil?
+  end
 end

@@ -6,6 +6,10 @@ module ApplicationConfig
     end
     params
   end
+
+  def self.default_domain
+    "localhost.#{BASE_DOMAIN[Rails.env.to_sym]}"
+  end
 end
 
 YAML.load_file(File.join(Rails.root, 'config', 'config.yml')).each do |k, v|

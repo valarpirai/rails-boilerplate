@@ -1,5 +1,5 @@
 module ApplicationCable
-  class FeatureFlagsChannel < ApplicationCable::Channel
+  class FeatureFlagsChannel < Channel
 
     def subscribed
       # stream_from 'messages'
