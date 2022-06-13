@@ -71,7 +71,7 @@ gem 'rotp', '~> 6.1.0'
 gem 'oj', '~> 3.11.0'
 
 # Sidekiq background processing
-gem 'sidekiq', '~> 6.2'
+gem 'sidekiq', '~> 6.4'
 
 gem 'httparty', '~> 0.18'
 
