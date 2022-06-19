@@ -18,26 +18,7 @@ You cannot use new as a key.</small>
     <%= f.text_field :description, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <label for="type">Variation Type</label>
-    <%= f.select :type, flag_variation_types(@feature_flag.type), {}, { class: 'form-control' }%>
-  </div>
-
-  <div class='variation-container'>
-    <div class="form-group variation-form">
-      <label for="variation">Variation 1</label>
-      <%= f.text_field :choices, class: 'form-control variation-values', value: (new_page ? 'True' : @feature_flag.choices[0]), multiple: true %>
-    </div>
-
-    <div class="form-group">
-      <label for="variation">Variation 2</label>
-      <%= f.text_field :choices, class: 'form-control variation-values', value: (new_page ? 'False' : @feature_flag.choices[1]), multiple: true %>
-    </div>
-  </div>
-
-  <span id="add_variation" class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Add Variation">Add Variation</span>
-
-  <div class="container row">
+  <div class="form-group row">
     <div class="col-12">Default Variations</div>
     <div class="input-group col-6">
       <div class="input-group-prepend">
@@ -61,6 +42,37 @@ You cannot use new as a key.</small>
       <% end %>
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="type">Variation Type</label>
+    <%= f.select :type, flag_variation_types(@feature_flag.type), {}, { class: 'form-control' }%>
+  </div>
+
+
+  <% if new_page %>
+    <div class='variation-container'>
+      <div class="form-group variation-form">
+        <label for="variation">Variation 1</label>
+        <%= f.text_field :choices, class: 'form-control variation-values', value: 'True', multiple: true %>
+      </div>
+
+      <div class="form-group">
+        <label for="variation">Variation 2</label>
+        <%= f.text_field :choices, class: 'form-control variation-values', value: 'False', multiple: true %>
+      </div>
+    </div>
+  <% else %>
+    <div class='variation-container'>
+      <% @feature_flag.choices.each.with_index(1) do |choice, index| %>
+        <div class="form-group variation-form">
+          <label for="variation">Variation <%= index %></label>
+          <%= f.text_field :choices, class: 'form-control variation-values', value: choice, multiple: true %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <span id="add_variation" class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Add Variation">Add Variation</span>
 
   <%= f.submit (new_page ? 'Create' : 'Update'), class: 'btn btn-primary mt-4' %>
 <% end %>
@@ -113,10 +125,9 @@ jQuery(function () {
   });
 
   jQuery('#add_variation').click(function () {
-    return;
     var container = jQuery('.variation-container');
-    var form_content = jQuery('.variation-form');
-    container.append(form_content.outerHTML());
+    var variation_count = jQuery('.form-group', container).length;
+    container.append('<div class="form-group variation-form"><label for="variation">Variation ' + (variation_count + 1) + '</label><input class="form-control variation-values" value="" multiple="multiple" type="text" name="feature_flag[choices][]"></div>');
   });
 });
 </script>
