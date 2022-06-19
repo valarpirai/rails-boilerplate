@@ -24,8 +24,10 @@
   <div class="col-6 card">
     
       <div class="card-body">
-        <span>API Key: <span class='key'><%= @environment.api_key %></span></span>
-        <span class="btn btn-outline-primary btn-sm float-right" data-toggle="tooltip" title="Copy to clipboard" id='copy-cb'>Copy</span>
+        <span>API Key: <span class='key' id="key"><%= @environment.api_key %></span></span>
+        <button class="btn btn-outline-primary btn-sm float-right" data-clipboard-target="#key">
+          Copy to clipboard
+      </button>
       </div>
   </div>
 </div>
@@ -53,36 +55,7 @@
 </div>
 
 <script>
-  jQuery('#copy-cb').click(function(e) {
-    var ele = jQuery(this);
-    var txt = jQuery('.key', ele.parent());
-    copyToClipboard(txt.text());
-  });
-
-  function copyToClipboard(text) {
-    if (window.clipboardData && window.clipboardData.setData) {
-        // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
-        return window.clipboardData.setData("Text", text);
-
-    }
-    else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-        var textarea = document.createElement("textarea");
-        textarea.textContent = text;
-        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
-        }
-        catch (ex) {
-            console.warn("Copy to clipboard failed.", ex);
-            return false;
-        }
-        finally {
-            document.body.removeChild(textarea);
-        }
-    }
-  }
+  new ClipboardJS('.btn');
 
   jQuery('#environment-select').on('change', function() {
     var url = '<%= project_change_environment_path(@project.uuid) %>?env=' + this.selectedOptions[0].text;
@@ -96,7 +69,6 @@
   });
 
   jQuery(function () {
-    # Unused
     jQuery('body').on('change', '.on-off', function () {
       var ele = jQuery(this);
       jQuery('label', ele.parent()).text(this.checked ? 'on' : 'off');
