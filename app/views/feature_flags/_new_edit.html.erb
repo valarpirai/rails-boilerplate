@@ -66,6 +66,7 @@ You cannot use new as a key.</small>
       <% @feature_flag.choices.each.with_index(1) do |choice, index| %>
         <div class="form-group variation-form">
           <label for="variation">Variation <%= index %></label>
+          <span class="btn btn-sm btn-outline-danger delete-variation float-right">Delete</span>
           <%= f.text_field :choices, class: 'form-control variation-values', value: choice, multiple: true %>
         </div>
       <% end %>
@@ -127,7 +128,9 @@ jQuery(function () {
   jQuery('#add_variation').click(function () {
     var container = jQuery('.variation-container');
     var variation_count = jQuery('.form-group', container).length;
-    container.append('<div class="form-group variation-form"><label for="variation">Variation ' + (variation_count + 1) + '</label><input class="form-control variation-values" value="" multiple="multiple" type="text" name="feature_flag[choices][]"></div>');
+    container.append('<div class="form-group variation-form"><label for="variation">Variation ' + (variation_count + 1) + '</label><span class="btn btn-sm btn-outline-danger delete-variation float-right">Delete</span><input class="form-control variation-values" value="" multiple="multiple" type="text" name="feature_flag[choices][]"></div>');
   });
+
+  // delete-variation
 });
 </script>
