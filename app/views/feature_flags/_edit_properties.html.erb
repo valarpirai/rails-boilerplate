@@ -1,5 +1,5 @@
 <div class="">
-<span class="h3">Enable features - <%= @feature_flag.key %></span>
+<span class="h3">Flag - <%= @feature_flag.key %></span>
 <div class="form-group">
   <span>Type : <%= @feature_flag.type_name %></span>
 </div>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="form-group">
-    <label for="percentage_of_account">Percentage of accounts : </label>
+    <label for="percentage_of_account">Threshold: </label>
     <%= f.text_field :percentage_of_account, type: 'number', step: 10, min: 0, max: 100, class: 'form-control' %>
   </div>
   <div class="form-group">
@@ -29,12 +29,12 @@
       <span class='btn btn-primary' data-action='partial-enable'>Save</span>
     </div>
     <div class='col'>
-      <span class='btn btn-primary' data-action='enable'>Fully Enable</span>
+      <span class='btn btn-primary' data-action='enable'>Set threshold to 100</span>
     </div>
   </div>  
   <div class='row mt-4 enable-features'>
     <div class='col'>
-      <span class='btn btn-danger' data-action='disable'>Disable</span>
+      <span class='btn btn-danger' data-action='disable'>Set threshold to 0</span>
     </div>
   </div>
   <% end %>
