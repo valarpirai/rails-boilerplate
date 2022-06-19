@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include Concerns::ApplicationLayoutConcern
   include Concerns::ApplicationConcern
   include Concerns::ApplicationErrorHandlers
+  include Pagy::Backend
 
   before_action :authenticate_user!
 

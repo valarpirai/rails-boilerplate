@@ -41,7 +41,7 @@
     <div id='flag-list' class="list-group mt-4">
       <%= render partial: 'feature_flags/feature_flag', collection: @feature_flags, locals: { configs: @configs, project: @project, environment_id: @environment.id } %>
     </div>
-    <%= paginate @feature_flags %>
+    <%== pagy_nav @pagy %>
   </div>
 
   <div class="col-6 card mt-3">

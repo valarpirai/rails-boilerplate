@@ -62,7 +62,7 @@ gem 'request_store', '~> 1.0'
 gem 'seed-fu', '~> 2.3'
 
 # Active Record Pagination
-gem 'kaminari', '~> 1.2.1'
+gem 'pagy', '~> 5.10'
 
 # TOTP Gem
 gem 'rotp', '~> 6.1.0'

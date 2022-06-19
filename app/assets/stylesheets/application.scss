@@ -101,4 +101,13 @@
   .btn {
     width: 100%;
   }
- }
+}
+
+.list-group-item {
+  border-left-width: 5px;
+}
+
+.list-group-item.active {
+  color: inherit;
+  background-color: #ffffff;
+}

@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :load_environment, only: %i[show search_flags]
 
   def index
-    @projects = Project.includes([:feature_flags, :environments]).page params[:page]
+    @pagy, @projects = pagy(Project.includes([:feature_flags, :environments]))
   end
 
   def new
@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @feature_flags = @project.feature_flags.page params[:page]
+    @pagy, @feature_flags = pagy(@project.feature_flags)
     env_config = EnvironmentConfig.where(environment_id: @environment.id, feature_flag: @feature_flags.map(&:id))
     @configs = env_config.each_with_object({}) { |conf, obj| obj[conf.feature_flag_id] = conf }
   end
