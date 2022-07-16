@@ -60,7 +60,7 @@ class Redis
 
     ActiveSupport::Notifications.subscribe "command.redis" do |*args|
       event = ActiveSupport::Notifications::Event.new(*args)
-      return unless log_subscriber.logger.debug?
+      next unless log_subscriber.logger.debug?
       cmds = event.payload[:commands]
 
       output = cmds.map do |name, *args|
@@ -71,7 +71,7 @@ class Redis
         end
       end.join(" ")
 
-      log_subscriber.debug log_subscriber.message(event, "Redis", output)
+      log_subscriber.logger.debug log_subscriber.message(event, "Redis", output)
     end
   end
 end

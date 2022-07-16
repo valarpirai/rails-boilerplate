@@ -76,8 +76,8 @@ gem 'sidekiq', '~> 6.4'
 gem 'httparty', '~> 0.18'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'bullet'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

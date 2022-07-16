@@ -3,3 +3,4 @@ app_initializers:
     - patches
     - regex
     - application_config
+    - log_subscribers
