@@ -88,7 +88,7 @@ module Notifications
     end
   end
 
-  def self.controller_runtime(name, log_subscriber)
+  def self.generate_controller_runtime(name, log_subscriber)
     runtime_attr = "#{name.to_s.underscore}_runtime".to_sym
     Module.new do
       extend ActiveSupport::Concern
@@ -130,41 +130,51 @@ module Notifications
     end
   end
 
-  def self.railtie(name, log_subscriber, controller_runtime)
-    Class.new(Rails::Railtie) do
-      railtie_name name
-      initializer "#{name}.notifications" do
-        log_subscriber.attach_to name.to_sym
-        ActiveSupport.on_load(:action_controller) do
-          include controller_runtime
-        end
-      end
-    end
-  end
-
   def self.subscribe(name, label: nil, &block)
     label ||= name
     log_subscriber = Class.new(LogSubscriber, &block)
-    controller_runtime = self.controller_runtime(name, log_subscriber)
-    railtie(name, log_subscriber, controller_runtime)
+    log_subscriber.attach_to name.to_sym
+    controller_runtime = generate_controller_runtime(label, log_subscriber)
+    ActiveSupport.on_load(:action_controller) do
+      include controller_runtime
+    end
   end
 end
 
 Notifications.subscribe("redis", label: "Redis") do
   event :command do |event|
-    puts "ssdf"
     next unless logger.debug?
     cmds = event.payload[:commands]
 
     output = cmds.map do |name, *args|
       if !args.empty?
-        "[ #{name.to_s.upcase} ]"
+        "[ #{name.to_s.upcase} #{format_arguments(args)} ]"
       else
         "[ #{name.to_s.upcase} ]"
       end
     end.join(' ')
 
     debug message(event, 'Redis', output)
+  end
+
+  private
+
+  def format_arguments(args)
+    args.map do |arg|
+      if arg.respond_to?(:encoding) && arg.encoding == Encoding::ASCII_8BIT
+        '<BINARY DATA>'
+      else
+        arg
+      end
+    end.join(' ')
+  end
+end
+
+Notifications.subscribe("active_record", label: "ActiveRecord") do
+  event :command do |event|
+    next unless logger.debug?
+    cmds = event.payload[:commands]
+    debug message(event, 'ActiveRecord', cmds)
   end
 end
 
