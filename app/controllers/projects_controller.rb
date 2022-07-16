@@ -35,6 +35,7 @@ class ProjectsController < ApplicationController
     @pagy, @feature_flags = pagy(@project.feature_flags)
     env_config = EnvironmentConfig.where(environment_id: @environment.id, feature_flag: @feature_flags.map(&:id))
     @configs = env_config.each_with_object({}) { |conf, obj| obj[conf.feature_flag_id] = conf }
+
   end
 
   def change_environment
@@ -79,6 +80,7 @@ class ProjectsController < ApplicationController
   end
 
   def load_environment
+    $global_redis.get params[:action]
     @environments ||= load_object.environments
     @environment ||= @environments.select { |env| env.name == params[:env] }.first || @environments.first
   end

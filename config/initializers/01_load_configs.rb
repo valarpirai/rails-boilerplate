@@ -10,3 +10,7 @@ redis_config = config_file('redis.yml')
 RedisConfig = redis_config['main'][Rails.env]
 
 RateLimitConfig = redis_config['rate_limit'][Rails.env]
+
+redis_connection = Redis.new RedisConfig
+$global_redis = Redis::Namespace.new(:gl, redis: redis_connection)
+

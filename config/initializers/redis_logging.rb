@@ -55,23 +55,23 @@ class Redis
       end
     end
 
-    log_subscriber = LogSubscriber.new
+    log_s = LogSubscriber.new
     LogSubscriber.color ActiveSupport::LogSubscriber::RED
 
     ActiveSupport::Notifications.subscribe "command.redis" do |*args|
       event = ActiveSupport::Notifications::Event.new(*args)
-      next unless log_subscriber.logger.debug?
+      next unless log_s.logger.debug?
       cmds = event.payload[:commands]
 
       output = cmds.map do |name, *args|
         if !args.empty?
-          "[ #{name.to_s.upcase} #{log_subscriber.format_arguments(args)} ]"
+          "[ #{name.to_s.upcase} #{log_s.format_arguments(args)} ]"
         else
           "[ #{name.to_s.upcase} ]"
         end
       end.join(" ")
 
-      log_subscriber.logger.debug log_subscriber.message(event, "Redis", output)
+      log_s.logger.debug log_s.message(event, "Redis", output)
     end
   end
 end
