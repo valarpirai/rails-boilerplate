@@ -34,6 +34,7 @@ module FlagManager
     Dir["#{Rails.root}/lib/middleware/**/*"].each do |file|
       require file if file.end_with?('.rb')
     end
+
     config.middleware.use ::Middleware::RouteChecker
     config.middleware.use ::Middleware::ShardSelector
 

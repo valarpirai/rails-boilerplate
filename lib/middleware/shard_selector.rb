@@ -1,3 +1,4 @@
+require "#{Rails.root}/lib/sharding"
 module Middleware
   class ShardSelector
     RESPONSE_HEADERS = { 'Content-Type' => 'application/json' }

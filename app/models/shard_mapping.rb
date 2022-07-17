@@ -16,7 +16,7 @@ class ShardMapping < ApplicationRecord
 
     def fetch_by_domain(domain)
       domain = ApplicationConfig.default_domain if Rails.env.eql?('development') && domain.eql?('localhost')
-      find_by(account_id: DomainMapping.find_by(domain: domain).account_id)
+      find_by(account_id: DomainMapping.find_by(domain: domain)&.account_id)
     end
 
     private

@@ -1,6 +1,7 @@
 require "redis"
 require "active_support"
 
+# MonkeyPatch Redis client to emit ActiveSupport Notification
 class Redis
   module Instrumentation
     module Logging

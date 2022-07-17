@@ -170,11 +170,3 @@ Notifications.subscribe("redis", label: "Redis") do
   end
 end
 
-Notifications.subscribe("active_record", label: "ActiveRecord") do
-  event :command do |event|
-    next unless logger.debug?
-    cmds = event.payload[:commands]
-    debug message(event, 'ActiveRecord', cmds)
-  end
-end
-
