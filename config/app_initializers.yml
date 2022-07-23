@@ -6,3 +6,4 @@ app_initializers:
     - log_subscribers
     - redis_instrumentation
     - sql_instrumentation
+    - controller_log_subscriber

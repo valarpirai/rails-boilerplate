@@ -40,25 +40,29 @@ module AppNotifications
     end
 
     class << self
+      def key(type)
+        "#{@name}_#{type}".to_sym
+      end
+
       # Store aggregated runtime form request specific store
       def runtime=(value)
-        RequestStore.store["#{@name}_runtime"] = value
+        RequestStore.store[key(:time)] = value
       end
 
       # Fetch aggregated runtime form request specific store
       def runtime
-        RequestStore.store["#{@name}_runtime"] || 0
+        RequestStore.store[key(:time)] || 0
       end
 
       def increment_call(type)
-        RequestStore.store["#{@name}_calls"] ||= {}
-        RequestStore.store["#{@name}_calls"][type] ||= 0
-        RequestStore.store["#{@name}_calls"][type] += 1
+        RequestStore.store[key(:calls)] ||= {}
+        RequestStore.store[key(:calls)][type] ||= 0
+        RequestStore.store[key(:calls)][type] += 1
       end
 
       # Fetch aggregated calls form request specific store
       def calls
-        RequestStore.store["#{@name}_calls"] || {}
+        RequestStore.store[key(:calls)] || {}
       end
 
       # Reset aggregated runtime
@@ -88,19 +92,19 @@ module AppNotifications
         end
       end
 
-      protected
+      # protected
 
-      def inherited(base)
-        super
-        base.class_eval do
-          @name ||= SecureRandom.hex
-        end
-      end
+      # def inherited(base)
+      #   super
+      #   base.class_eval do
+      #     @name ||= SecureRandom.hex
+      #   end
+      # end
     end
   end
 
   def self.generate_controller_runtime(name, log_subscriber)
-    runtime_attr = "#{name.to_s.underscore}_runtime".to_sym
+    runtime_attr = "#{name.to_s.underscore}_time".to_sym
     calls_attr = "#{name.to_s.underscore}_calls".to_sym
     Module.new do
       extend ActiveSupport::Concern
@@ -152,6 +156,7 @@ module AppNotifications
   def self.subscribe(name, label: nil, &block)
     label ||= name
     log_subscriber = Class.new(LogSubscriber, &block)
+    log_subscriber.instance_variable_set("@name", name)
     log_subscriber.attach_to name.to_sym
     controller_runtime = generate_controller_runtime(label, log_subscriber)
     ActiveSupport.on_load(:action_controller) do
@@ -164,7 +169,7 @@ AppNotifications.subscribe("redis", label: "Redis") do
   event :command do |event|
     next unless logger.debug?
     cmds = event.payload[:commands]
-    type = [:get, :set].includes?(cmds.first.first) ? cmds.first.first : :other
+    type = [:get, :set].include?(cmds.first.first) ? cmds.first.first : :other
     self.class.increment_call(type)
 
     output = cmds.map do |name, *args|

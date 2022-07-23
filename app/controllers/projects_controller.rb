@@ -81,7 +81,8 @@ class ProjectsController < ApplicationController
   def load_environment
     $global_redis.get params[:action]
     $global_redis.set params[:action], params[:action]
-    $global_redis.get params[:action]
+    $global_redis.expire params[:action], 1.minutes
+    $global_redis.expire params[:action], 1.minutes
     @environments ||= load_object.environments
     @environment ||= @environments.select { |env| env.name == params[:env] }.first || @environments.first
   end
