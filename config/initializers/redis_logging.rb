@@ -7,7 +7,7 @@ class Redis
     module Logging
       def logging(commands, &block)
         ActiveSupport::Notifications.instrument("command.redis", commands: commands) do
-          return super(commands, &block)
+          super(commands, &block)
         end
       end
     end

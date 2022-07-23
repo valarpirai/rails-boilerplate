@@ -80,6 +80,8 @@ class ProjectsController < ApplicationController
 
   def load_environment
     $global_redis.get params[:action]
+    $global_redis.set params[:action], params[:action]
+    $global_redis.get params[:action]
     @environments ||= load_object.environments
     @environment ||= @environments.select { |env| env.name == params[:env] }.first || @environments.first
   end

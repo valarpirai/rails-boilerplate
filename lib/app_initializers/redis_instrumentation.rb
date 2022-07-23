@@ -4,7 +4,7 @@ require 'active_support/log_subscriber'
 require 'active_support/concern'
 require 'active_support/core_ext/module/attr_internal'
 
-module Notifications
+module AppNotifications
   # LogSubscriber with runtime calculation and improved logging
   class LogSubscriber < ActiveSupport::LogSubscriber
     class_attribute :odd_color, :even_color
@@ -50,6 +50,17 @@ module Notifications
         RequestStore.store["#{@name}_runtime"] || 0
       end
 
+      def increment_call(type)
+        RequestStore.store["#{@name}_calls"] ||= {}
+        RequestStore.store["#{@name}_calls"][type] ||= 0
+        RequestStore.store["#{@name}_calls"][type] += 1
+      end
+
+      # Fetch aggregated calls form request specific store
+      def calls
+        RequestStore.store["#{@name}_calls"] || {}
+      end
+
       # Reset aggregated runtime
       #
       # @return Numeric previous runtime value
@@ -70,7 +81,7 @@ module Notifications
       # @param command [Symbol] event name
       # @param runtime [Boolean] aggregate runtime for this event
       # @yield [ActiveSupport::Notifications::Event] handle event
-      def event(command, runtime: true, &block)
+      def event(command, runtime: true, calls: true, &block)
         define_method command do |event|
           self.class.runtime += event.duration if runtime
           instance_exec(event, &block) if block
@@ -90,6 +101,7 @@ module Notifications
 
   def self.generate_controller_runtime(name, log_subscriber)
     runtime_attr = "#{name.to_s.underscore}_runtime".to_sym
+    calls_attr = "#{name.to_s.underscore}_calls".to_sym
     Module.new do
       extend ActiveSupport::Concern
       attr_internal runtime_attr
@@ -115,14 +127,21 @@ module Notifications
         super(payload)
         runtime = (send(runtime_attr) || 0) + log_subscriber.reset_runtime
         payload[runtime_attr] = runtime
+        payload[calls_attr] = log_subscriber.calls
       end
 
       const_set(:ClassMethods, Module.new do
         define_method :log_process_action do |payload|
           messages = super(payload)
           runtime = payload[runtime_attr]
+          calls = payload[calls_attr]
           if runtime && runtime != 0
-            messages << format("#{name}: %.1fms", runtime.to_f)
+            if calls.present?
+              arr = calls.map { |k, v| "#{v}#{k[0]}"}.join(", ")
+              messages << format("#{name}: %.2fms(#{arr})", runtime.to_f, arr)
+            else
+              messages << format("#{name}: %.2fms", runtime.to_f)
+            end
           end
           messages
         end
@@ -141,10 +160,12 @@ module Notifications
   end
 end
 
-Notifications.subscribe("redis", label: "Redis") do
+AppNotifications.subscribe("redis", label: "Redis") do
   event :command do |event|
     next unless logger.debug?
     cmds = event.payload[:commands]
+    type = [:get, :set].includes?(cmds.first.first) ? cmds.first.first : :other
+    self.class.increment_call(type)
 
     output = cmds.map do |name, *args|
       if !args.empty?
