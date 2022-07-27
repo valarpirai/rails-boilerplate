@@ -17,8 +17,9 @@ class ControllerLogSubscriber <  ActiveSupport::LogSubscriber
     payload[:duration] = payload[:duration].round(2)
     ip = payload[:ip] || payload[:remote_ip]
     redis_calls = payload[:redis_calls].values.inject(:+)
+    active_record_calls = payload[:active_record_calls].values.inject(:+)
 
-    log_file_format = "[INSTRUMENT] ip=#{ip}, uid=#{payload[:uuid]}, a=#{payload[:account_id]}, usr=#{payload[:user_id]}, s=#{payload[:shard_name]}, d=#{payload[:domain]}, u=#{payload[:url]}, p=#{payload[:path]}, c=#{payload[:controller]}, acn=#{payload[:action]}, sip=#{payload[:server_ip]}, st=#{payload[:status]}, f=#{payload[:format]}, db=#{payload[:db_runtime]}, vw=#{payload[:view_runtime]}, rt=#{payload[:redis_time].round(2)}, rc=#{redis_calls}, mc=#{performance_metrics[:memcache_calls]}, mdr=#{performance_metrics[:memcache_dup_reads]}, mt=#{performance_metrics[:memcache_time]}, drn=#{payload[:duration]}"
+    log_file_format = "[INSTRUMENT] ip=#{ip}, uid=#{payload[:uuid]}, a=#{payload[:account_id]}, usr=#{payload[:user_id]}, s=#{payload[:shard_name]}, d=#{payload[:domain]}, u=#{payload[:url]}, p=#{payload[:path]}, c=#{payload[:controller]}, acn=#{payload[:action]}, sip=#{payload[:server_ip]}, st=#{payload[:status]}, f=#{payload[:format]}, dbt=#{payload[:db_runtime]}, dbc=#{active_record_calls}, vw=#{payload[:view_runtime]}, rt=#{payload[:redis_time].round(2)}, rc=#{redis_calls}, mc=#{performance_metrics[:memcache_calls]}, mdr=#{performance_metrics[:memcache_dup_reads]}, mt=#{performance_metrics[:memcache_time]}, drn=#{payload[:duration]}"
   end
 end
 

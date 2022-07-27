@@ -50,7 +50,7 @@ module Concerns::ApplicationConcern
   private
 
   def append_info_to_payload(payload)
-    super
+    super(payload)
     payload[:domain] = request.env['HTTP_HOST']
     payload[:ip] = Thread.current[:client_ip] = request.env['REMOTE_ADDR']
     payload[:url] = request.url

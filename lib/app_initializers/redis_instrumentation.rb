@@ -92,14 +92,14 @@ module AppNotifications
         end
       end
 
-      # protected
+      protected
 
-      # def inherited(base)
-      #   super
-      #   base.class_eval do
-      #     @name ||= SecureRandom.hex
-      #   end
-      # end
+      def inherited(base)
+        super
+        base.class_eval do
+          @name ||= SecureRandom.hex
+        end
+      end
     end
   end
 
@@ -156,7 +156,7 @@ module AppNotifications
   def self.subscribe(name, label: nil, &block)
     label ||= name
     log_subscriber = Class.new(LogSubscriber, &block)
-    log_subscriber.instance_variable_set("@name", name)
+    # log_subscriber.instance_variable_set("@name", name)
     log_subscriber.attach_to name.to_sym
     controller_runtime = generate_controller_runtime(label, log_subscriber)
     ActiveSupport.on_load(:action_controller) do
