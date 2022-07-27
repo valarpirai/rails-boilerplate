@@ -6,6 +6,7 @@ class Redis
   module Instrumentation
     module Logging
       def logging(commands, &block)
+        # @logger = Rails.logger
         ActiveSupport::Notifications.instrument("command.redis", commands: commands) do
           super(commands, &block)
         end

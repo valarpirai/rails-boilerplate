@@ -3,7 +3,9 @@ class Sharding
     def select_shard_of(shard_key, &block)
       shard = ShardMapping.lookup(shard_key)
       check_shard_status(shard)
-      ActiveRecord::Base.on_shard(shard.shard_name.to_sym, &block)
+      ActiveRecord::Base.on_shard(shard.shard_name.to_sym) do
+        block.call(shard.shard_name)
+      end
     end
 
     def run_on_master(&block)

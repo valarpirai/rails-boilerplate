@@ -15,8 +15,14 @@
 
 
 # This doesn't provide accurate duration(Monotonic) for ActiveRecord. But, we can use it for counting
-# Notifications.subscribe("active_record", label: "ActiveRecord") do
+# AppNotifications.subscribe("active_record", label: "ActiveRecord") do
 #   event :sql do |event|
+#     cmds = event.payload[:sql]
+#     # type = [:get, :set].include?(cmds.first.first) ? cmds.first.first : :other
+#     # self.class.increment_call(type)
+
+#     puts cmds.inspect
+
 #     next unless logger.debug?
 #     payload = event.payload
 #     shard_name = payload[:shard_name]
@@ -29,7 +35,7 @@
 #     backtrace = Rails.backtrace_cleaner.clean caller
 #     # Exclude patches
 #     relevant_caller_line = backtrace.detect do |caller_line|
-#       !caller_line.include?('/hacks/') || !caller_line.include?('/gems/')
+#       !caller_line.include?('/app_initializers/') || !caller_line.include?('/gems/')
 #     end
 
 #     debug "#{name} #{sql}"

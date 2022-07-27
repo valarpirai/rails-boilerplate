@@ -46,4 +46,18 @@ module Concerns::ApplicationConcern
   def select_latest_shard(&block)
     Sharding.select_latest_shard(&block)
   end
+
+  private
+
+  def append_info_to_payload(payload)
+    super
+    payload[:domain] = request.env['HTTP_HOST']
+    payload[:ip] = Thread.current[:client_ip] = request.env['REMOTE_ADDR']
+    payload[:url] = request.url
+    payload[:account_id] = Account.current ? Account.current.id : ""
+    payload[:user_id]    = (Account.current && User.current) ? User.current.id : ""
+    payload[:shard_name] = Thread.current[:shard_name_payload]
+    payload[:uuid] = Thread.current[:message_uuid] = request.request_id
+    payload[:sip] = request.env['SERVER_NAME']
+  end
 end

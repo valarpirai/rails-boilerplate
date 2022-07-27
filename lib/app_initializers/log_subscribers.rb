@@ -37,7 +37,7 @@ module ActiveRecord
       backtrace = Rails.backtrace_cleaner.clean caller
       # Exclude patches
       relevant_caller_line = backtrace.detect do |caller_line|
-        !caller_line.include?('/hacks/') || !caller_line.include?('/gems/')
+        !caller_line.include?('/app_initializers/') || !caller_line.include?('/middleware/')
       end
 
       info "#{shard} #{name}  #{sql}"
