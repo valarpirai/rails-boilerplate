@@ -57,9 +57,13 @@ class FeatureFlagsController < ApplicationController
         else
           nil
         end
-    env_config.save
-    ws_broadcast(@environment.client_id, env_config)
-    head :no_content
+    if env_config.save
+      ws_broadcast(@environment.client_id, env_config)
+      FeatureFlagsMailer.with(env_config: env_config, account_id: Account.current.id).flag_updated.deliver_later
+      head :no_content
+    else
+      head :internal_server_error
+    end
   end
 
   def destroy

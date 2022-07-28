@@ -18,7 +18,7 @@ class Signup
     account.save!
     # raise 'user invalid' unless user.valid?
     user.save!
-  rescue Exception => e
+  rescue StandardError => e
     @errors << e
     clean_up
     false

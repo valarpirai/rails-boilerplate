@@ -23,5 +23,9 @@ class ShardMapping < ApplicationRecord
     def is_numeric?(str)
       true if Float(str) rescue false
     end
+
+    def account_uuid?(str)
+      !(str =~ /^[a-zA-Z0-9]{10}$/).nil?
+    end
   end
 end
