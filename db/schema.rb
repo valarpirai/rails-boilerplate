@@ -27,6 +27,18 @@ ActiveRecord::Schema.define(version: 2021_04_24_080317) do
     t.index ["account_id"], name: "index_shard_mappings_on_account_id", unique: true
   end
 
+  create_table "percentage_feature_switches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "threshold"
+    t.json "conditions"
+    t.boolean "active"
+    t.string "comment_author"
+    t.text "comment_note"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "active"], name: "index_percentage_feature_switches_on_name_and_active"
+  end
+
 end
 
 
