@@ -37,9 +37,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_record_shards (3.17.0)
-      activerecord (>= 4.2, < 6.1)
-      activesupport (>= 4.2, < 6.1)
+    active_record_shards (5.0.0)
+      activerecord (>= 5.1, < 6.1)
+      activesupport (>= 5.1, < 6.1)
     activejob (6.0.3.6)
       activesupport (= 6.0.3.6)
       globalid (>= 0.3.6)
@@ -309,7 +309,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_record_shards
+  active_record_shards (= 5.0.0)
   better_errors (~> 2.9)
   binding_of_caller
   bootsnap (>= 1.1.0)
