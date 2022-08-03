@@ -1,5 +1,10 @@
+require 'sidekiq/web'
+Sidekiq::Web.app_url = '/'
+
 Rails.application.routes.draw do
   root to: 'home#index'
+
+  mount Sidekiq::Web => '/sidekiq'
 
   get '/accounts/signup' => 'accounts#new'
   post '/accounts/signup' => 'accounts#signup'

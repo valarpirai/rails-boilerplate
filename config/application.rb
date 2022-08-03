@@ -39,5 +39,8 @@ module FlagManager
     config.middleware.use ::Middleware::ShardSelector
 
     config.session_store :cookie_store, key: '_myapp_session', httponly: true
+
+    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_name_prefix = Rails.env
   end
 end
