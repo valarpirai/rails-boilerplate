@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(version: 2021_04_24_080317) do
   end
 
   create_table "percentage_feature_switches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.integer "threshold"
+    t.string "name", null: false
+    t.integer "threshold", default: 0
     t.json "conditions"
-    t.boolean "active"
+    t.boolean "active", default: false
     t.string "comment_author"
     t.text "comment_note"
     t.datetime "created_at", precision: 6, null: false
