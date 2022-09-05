@@ -3,7 +3,7 @@ app_initializers:
     - patches
     - regex
     - application_config
-    - log_subscribers
     - redis_instrumentation
+    - sql_log_subscribers
     - sql_instrumentation
     - controller_log_subscriber

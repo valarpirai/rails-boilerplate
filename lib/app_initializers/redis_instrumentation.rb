@@ -142,7 +142,12 @@ module AppNotifications
           if runtime && runtime != 0
             if calls.present?
               arr = calls.map { |k, v| "#{v}#{k[0]}"}.join(", ")
-              messages << format("#{name}: %.2fms(#{arr})", runtime.to_f, arr)
+              message = messages.find { |msg| msg.include?(name) }
+              if message
+                message << "(#{arr})"
+              else
+                messages << format("#{name}: %.2fms(#{arr})", runtime.to_f, arr)
+              end
             else
               messages << format("#{name}: %.2fms", runtime.to_f)
             end
