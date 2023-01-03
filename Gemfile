@@ -74,7 +74,7 @@ gem 'oj', '~> 3.11.0'
 # Sidekiq background processing
 gem 'sidekiq', '~> 6.4'
 
-gem 'httparty', '~> 0.18'
+gem 'httparty', '~> 0.21'
 
 group :development, :test do
   gem 'bullet'
